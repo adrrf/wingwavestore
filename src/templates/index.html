@@ -29,11 +29,18 @@
       <input type='search' class='form-control form-control-dark text-bg-dark me-2' placeholder='Buscar...' aria-label='Buscar'>
       <button type='button' class='btn btn-outline-info me-2'>Buscar</button>
     </form>
-
+    {% if user.is_authenticated %}
     <div class='px-3 d-flex'>
-      <button type='button' class='btn btn-outline-primary me-2'>Accede</button>
-      <a href="/user/register"><button type='button' class='btn btn-primary' > Crear cuenta</button></a>
+      <a href="/user/me"><button type='button' class='btn btn-outline-primary me-2' > Mi cuenta</button></a>
+      <a href="/user/logout"><button type='submit' class='btn btn-primary' >Salir</button></a>
     </div>
+    {% else %}
+    <div class='px-3 d-flex'>
+      <a href="/user/login"><button type='button' class='btn btn-outline-primary me-2'>Accede</button></a>
+      <a href="/user/register"><button type='button' class='btn btn-primary' >Crear cuenta</button></a>
+    </div>
+    {% endif %}
+
   </nav>
 
   <table align="center">

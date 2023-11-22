@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from src.views import home, register, login
+from src.views import home, register, login, logout
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', home, name='home'),
     path('user/register/', register, name='register'),
     path('user/login/', login, name='login'),
-]
+    path('user/logout/', LogoutView.as_view(next_page='home'), name='logout'),]

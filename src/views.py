@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth import login as auth_login
 import re
 from bs4 import BeautifulSoup
 
@@ -40,13 +42,12 @@ def register(request):
             user_form = CreateUserForm(request.POST)
             if user_form.is_valid():
                 user_form.save()
-                messages.success(request, "Usuario registrado correctamente")
+                return redirect('login')
             else:
                 soup = BeautifulSoup(str(user_form.errors), "html.parser")
                 errors = soup.find_all("ul", class_="errorlist")
                 errors.pop(0)
                 for error_field in errors:
-                    print(error_field)
                     error_field = error_field.text
                     error += error_field 
                     error += " "
@@ -65,4 +66,19 @@ def login(request):
             error += "El campo usuario es obligatorio. "
         if not password:
             error += "El campo contraseña es obligatorio. "
+        if usuario and password:
+            user = authenticate(request, username=usuario, password=password)
+            if user is not None:
+                auth_login(request, user)
+                return redirect('home')
+            else:
+                error += "Usuario o contraseña incorrectos. "
+        if error:
+            messages.error(request, error)
+
     return render(request, 'user/login.html')
+
+def logoutUser(request):
+     if request.method=="POST":
+        logout(request)
+        return redirect('home')
