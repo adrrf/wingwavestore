@@ -54,3 +54,15 @@ def register(request):
             messages.error(request, error)
         
     return render(request, 'user/register.html')
+
+@csrf_protect
+def login(request):
+    if request.method == 'POST':
+        error = ""
+        usuario = request.POST.get('username')
+        password = request.POST.get('password')
+        if not usuario:
+            error += "El campo usuario es obligatorio. "
+        if not password:
+            error += "El campo contraseña es obligatorio. "
+    return render(request, 'user/login.html')
