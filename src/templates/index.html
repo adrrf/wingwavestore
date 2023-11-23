@@ -4,6 +4,40 @@
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+  <script>
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    function uuidv4() { 
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+      .replace(/[xy]/g, function (c) { 
+          const r = Math.random() * 16 | 0,  
+              v = c == 'x' ? r : (r & 0x3 | 0x8); 
+          return v.toString(16); 
+      }); 
+    }
+
+    let device = getCookie('device')
+
+    if (device == null || device == undefined || device == "") {
+      device = uuidv4()
+    } 
+
+    document.cookie = "device="+device + ";domain=;path=/"
+  </script>
 </head>
 <body>
   <nav class='navbar navbar-expand-sm navbar-dark bg-dark'>
@@ -24,11 +58,6 @@
         </li>
       </ul>
     </div>
-
-    <form class='d-flex' role='search'>
-      <input type='search' class='form-control form-control-dark text-bg-dark me-2' placeholder='Buscar...' aria-label='Buscar'>
-      <button type='button' class='btn btn-outline-info me-2'>Buscar</button>
-    </form>
     {% if user.is_authenticated %}
     <div class='px-3 d-flex'>
       <a href="/user/me"><button type='button' class='btn btn-outline-primary me-2' > Mi cuenta</button></a>
@@ -79,6 +108,10 @@
     </tr>
   </table>
 
+  <form class='d-flex' role='search'>
+    <input type='search' class='form-control form-control-dark text-bg-dark me-2' placeholder='Buscar...' aria-label='Buscar'>
+    <button type='button' class='btn btn-outline-info me-2'>Buscar</button>
+  </form>
 
   <footer class="footer fixed-bottom bg-dark text-light">
     <div class="container">
