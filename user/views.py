@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 import re
 from bs4 import BeautifulSoup
-from .models import Datos_envio
+from .models import Datos_envio, Datos_pago
 
 # Create your views here.
 from .forms import CreateUserForm, DatosEnvioForm
@@ -93,8 +93,8 @@ def datos_envio(request):
         datos_envio = Datos_envio.objects.filter(user=user)
         if datos_envio:
             datos_envio = datos_envio[0]
-        return render(request, 'user/datos_envio.html', {'calle': datos_envio.calle, 'numero': datos_envio.numero, 'puerta': datos_envio.puerta, 'codigo_postal': datos_envio.codigo_postal, 'ciudad': datos_envio.ciudad, 'provincia': datos_envio.provincia, 'pais': datos_envio.pais})
-           
+            return render(request, 'user/datos_envio.html', {'calle': datos_envio.calle, 'numero': datos_envio.numero, 'puerta': datos_envio.puerta, 'codigo_postal': datos_envio.codigo_postal, 'ciudad': datos_envio.ciudad, 'provincia': datos_envio.provincia, 'pais': datos_envio.pais})
+        return render(request, 'user/datos_envio.html')   
     if request.method == 'POST': 
         error = ""
         user = request.user
@@ -138,3 +138,49 @@ def datos_envio(request):
         if error:
             messages.error(request, error)
     return render(request, 'user/datos_envio.html')
+
+def datos_pago(request):
+    if request.method == 'GET':
+        user = request.user
+        datos_pago = Datos_pago.objects.filter(user=user)
+        if datos_pago:
+            datos_pago = datos_pago[0]
+            return render(request, 'user/datos_pago.html', {'titular': datos_pago.titular, 'numero_tarjeta': datos_pago.numero_tarjeta, 'caducidad': datos_pago.caducidad, 'cs': datos_pago.cs})
+        return render(request, 'user/datos_pago.html')
+    if request.method == 'POST': 
+        error = ""
+        user = request.user
+        titular = request.POST.get('titular')
+        numero_tarjeta = request.POST.get('numero_tarjeta')
+        caducidad = request.POST.get('caducidad')
+        cs = request.POST.get('cs')
+        if not titular:
+            error += "El campo titular es obligatorio. "
+        if not numero_tarjeta:
+            error += "El campo numero de tarjeta es obligatorio. "
+        if not caducidad:
+            error += "El campo caducidad es obligatorio. "
+        if not cs:
+            error += "El campo codigo de seguridad es obligatorio. "
+        if titular and numero_tarjeta and caducidad and cs:
+            datos_pago_form = DatosPagoForm(request.POST)
+            if datos_pago_form.is_valid():
+                previos = Datos_pago.objects.filter(user=user)
+                if previos:
+                    previos.delete()
+                datos_pago = datos_pago_form.save()
+                datos_pago.user = user
+                datos_pago.save()
+                messages.success(request, 'Tus datos de pago se han actualizado')
+                return redirect('datos_pago')
+            else:
+                soup = BeautifulSoup(str(datos_pago_form.errors), "html.parser")
+                errors = soup.find_all("ul", class_="errorlist")
+                errors.pop(0)
+                for error_field in errors:
+                    error_field = error_field.text
+                    error += error_field 
+                    error += " "
+        if error:
+            messages.error(request, error)
+    return render(request, 'user/datos_pago.html')

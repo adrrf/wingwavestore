@@ -17,6 +17,7 @@ class Datos_envio(models.Model):
     pais = models.CharField(max_length=255)
 
 class Datos_pago(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     titular = models.CharField(max_length=255)
     numero_tarjeta = models.CharField(max_length=255)
     caducidad = models.CharField(max_length=255)

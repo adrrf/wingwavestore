@@ -21,3 +21,14 @@ class DatosEnvioForm(forms.ModelForm):
             'ciudad': 'Ciudad',
             'pais': 'País',
             }
+
+class DatosPagoForm(forms.ModelForm):
+    class Meta:
+        model = Datos_pago
+        fields = ['titular', 'numero_tarjeta', 'caducidad', 'cs']
+        labels= {
+            'titular': 'Titular',
+            'numero_tarjeta': 'Número de tarjeta',
+            'caducidad': 'caducidad',
+            'cs': 'Codigo de seguridad',
+            }
