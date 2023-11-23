@@ -7,6 +7,7 @@ class Cliente(models.Model):
     dispositivo = models.CharField(max_length=255)
 
 class Datos_envio(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     calle = models.CharField(max_length=255)
     numero = models.IntegerField()
     puerta = models.CharField(max_length=255)
