@@ -5,9 +5,10 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 import re
 from bs4 import BeautifulSoup
+from .models import Datos_envio
 
 # Create your views here.
-from .forms import CreateUserForm
+from .forms import CreateUserForm, DatosEnvioForm
 
 # Create your views here.
 
@@ -82,3 +83,47 @@ def logoutUser(request):
      if request.method=="POST":
         logout(request)
         return redirect('home')
+
+def me(request):
+    return render(request, 'user/me.html')
+
+def datos_envio(request):
+    if request.method == 'POST': 
+        error = ""
+        user = request.user
+        calle = request.POST.get('calle')
+        numero = request.POST.get('numero')
+        puerta = request.POST.get('puerta')
+        codigo_postal = request.POST.get('codigo_postal')
+        provincia = request.POST.get('provincia')
+        pais = request.POST.get('pais')
+        if not calle:
+            error += "El campo calle es obligatorio. "
+        if not numero:
+            error += "El campo numero es obligatorio. "
+        if not puerta:
+            error += "El campo puerta es obligatorio. "
+        if not codigo_postal:
+            error += "El campo codigo_postal es obligatorio. "
+        if not provincia:
+            error += "El campo provincia es obligatorio. "
+        if not pais:
+            error += "El campo pais es obligatorio. "
+        if calle and numero and puerta and codigo_postal and provincia and pais:
+            datos_envio_form = DatosEnvioForm(request.POST)
+            if datos_envio_form.is_valid():
+                datos_envio = datos_envio_form.save()
+                datos_envio.user = user
+                datos_envio.save()
+                messages.success(request, 'Tus datos de envío se han actualizado')
+            else:
+                soup = BeautifulSoup(str(datos_envio_form.errors), "html.parser")
+                errors = soup.find_all("ul", class_="errorlist")
+                errors.pop(0)
+                for error_field in errors:
+                    error_field = error_field.text
+                    error += error_field 
+                    error += " "
+        if error:
+            messages.error(request, error)
+    return render(request, 'user/datos_envio.html')
