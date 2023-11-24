@@ -1,6 +1,6 @@
 [
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 1,
   "fields": {
     "nombre": "Hélices",
@@ -14,7 +14,7 @@
   }
 },
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 2,
   "fields": {
     "nombre": "Baterias",
@@ -28,7 +28,7 @@
   }
 },
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 3,
   "fields": {
     "nombre": "Cargador",
@@ -42,7 +42,7 @@
   }
 },
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 4,
   "fields": {
     "nombre": "Cámara",
@@ -56,7 +56,7 @@
   }
 },
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 5,
   "fields": {
     "nombre": "Control",
@@ -70,7 +70,7 @@
   }
 },
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 6,
   "fields": {
     "nombre": "Motores",
@@ -84,7 +84,7 @@
   }
 },
 {
-  "model": "product",
+  "model": "product.producto",
   "pk": 7,
   "fields": {
     "nombre": "Cable",
