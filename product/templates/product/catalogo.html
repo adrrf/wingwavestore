@@ -22,6 +22,9 @@
             <li class='nav-item active'>
               <a class='nav-link' href='/orders'>Pedidos</a>
             </li>
+            <li class='nav-item active'>
+              <a class='nav-link' href='/cart'>Carrito</a>
+            </li>
           </ul>
         </div>
         {% if user.is_authenticated %}
@@ -84,6 +87,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">{{ product.description }}</p>
+                <a href="/cart/add/{{ product.id }}"><button type='submit' class='btn btn-primary' >Añadir</button></a>
                 <a href="/products/{{ product.id }}" class="btn btn-primary form-control">Ver producto</a>
               </div>
             </div>

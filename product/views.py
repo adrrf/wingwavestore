@@ -6,4 +6,4 @@ def catalogo(request):
     products = Producto.objects.all()
     context = {'products': products}
     return render(request, 'product/catalogo.html', context)
-
+        
