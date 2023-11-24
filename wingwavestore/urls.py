@@ -19,10 +19,12 @@ from django.urls import path
 from src.views import home
 from user.views import register, login, logout
 from django.contrib.auth.views import LogoutView
+from product.views import catalogo  
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('user/register/', register, name='register'),
     path('user/login/', login, name='login'),
-    path('user/logout/', LogoutView.as_view(next_page='home'), name='logout'),]
+    path('user/logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('products/', catalogo, name='catalogo'),]

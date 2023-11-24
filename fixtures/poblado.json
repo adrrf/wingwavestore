@@ -1,0 +1,99 @@
+[
+{
+  "model": "product",
+  "pk": 1,
+  "fields": {
+    "nombre": "Hélices",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Hélices para drones",
+    "departamento": "Piezas",
+    "seccion": "No-Electronico",
+    "fabricante": "BJI",
+    "stock": 10
+  }
+},
+{
+  "model": "product",
+  "pk": 2,
+  "fields": {
+    "nombre": "Baterias",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Baterias para drones",
+    "departamento": "Piezas",
+    "seccion": "Electronico",
+    "fabricante": "AUTEL",
+    "stock": 10
+  }
+},
+{
+  "model": "product",
+  "pk": 3,
+  "fields": {
+    "nombre": "Cargador",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Cargador para drones",
+    "departamento": "Piezas",
+    "seccion": "Electronico",
+    "fabricante": "AUTEL",
+    "stock": 10
+  }
+},
+{
+  "model": "product",
+  "pk": 4,
+  "fields": {
+    "nombre": "Cámara",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Cámara para drones",
+    "departamento": "Piezas",
+    "seccion": "Electronico",
+    "fabricante": "AUTEL",
+    "stock": 10
+  }
+},
+{
+  "model": "product",
+  "pk": 5,
+  "fields": {
+    "nombre": "Control",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Control para drones",
+    "departamento": "Piezas",
+    "seccion": "Electronico",
+    "fabricante": "AUTEL",
+    "stock": 10
+  }
+},
+{
+  "model": "product",
+  "pk": 6,
+  "fields": {
+    "nombre": "Motores",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Motores para drones",
+    "departamento": "Piezas",
+    "seccion": "Electronico",
+    "fabricante": "AUTEL",
+    "stock": 10
+  }
+},
+{
+  "model": "product",
+  "pk": 7,
+  "fields": {
+    "nombre": "Cable",
+    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "precio": 10.0,
+    "descripcion": "Cable para drones",
+    "departamento": "Piezas",
+    "seccion": "Electronico",
+    "fabricante": "AUTEL",
+    "stock": 10
+  }
+}]
