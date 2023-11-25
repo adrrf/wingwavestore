@@ -10,3 +10,8 @@ class ProductoPedido(models.Model):
 
     def __str__(self):
         return str(self.id)
+    
+    @property
+    def total(self):
+        total = self.producto.precio * self.cantidad
+        return total

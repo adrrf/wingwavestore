@@ -16,6 +16,8 @@ def carrito(request):
         device = request.COOKIES['device']
         cliente, created = Cliente.objects.get_or_create(dispositivo=device)
     order, created = Pedido.objects.get_or_create(cliente=cliente, completado=False)
+    if order.productopedido_set.all().count() == 0:
+        return redirect('catalogo')
     items = order.productopedido_set.all()
     total = 0
     for item in items:

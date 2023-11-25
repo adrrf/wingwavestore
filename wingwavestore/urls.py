@@ -21,6 +21,7 @@ from user.views import register, login, me, datos_envio, datos_pago
 from django.contrib.auth.views import LogoutView
 from product.views import catalogo  
 from cart.views import carrito, addCarrito, sumCarrito, restCarrito
+from order.views import checkout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +36,5 @@ urlpatterns = [
     path('cart/', carrito, name='cart'),
     path('cart/add/<int:producto_id>/', addCarrito, name='addCarrito'),
     path('cart/sum/<int:producto_id>/', sumCarrito, name='sumCarrito'),
-    path('cart/dec/<int:producto_id>/', restCarrito, name='restCarrito'),]
+    path('cart/dec/<int:producto_id>/', restCarrito, name='restCarrito'),
+    path('order/checkout/', checkout, name='checkout'),]
