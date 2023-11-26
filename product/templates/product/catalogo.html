@@ -42,16 +42,16 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <div class="nav-link active" aria-current="page">¿QUÉ ESTAS BUSCANDO?</div>
+            <div class="nav-link active" aria-current="page">¿QUÉ ESTAS BUSCANDO?</div><br>
           </li>
           <li>
-            <br><a href="/products/piezas" class="nav-link link-body-emphasis">PIEZAS</a>
+            <a href="/products/piezas" class="nav-link link-body-emphasis">PIEZAS</a>
           </li>
           <li>
-            <br><a href="/products/drones" class="nav-link link-body-emphasis">DRONES</a>
+            <a href="/products/drones" class="nav-link link-body-emphasis">DRONES</a>
           </li>
           <li>
-            <br><a href="/products/accesorios" class="nav-link link-body-emphasis">ACCESORIOS</a>
+            <a href="/products/accesorios" class="nav-link link-body-emphasis">ACCESORIOS</a>
           </li>
           <li>
             <br><input type="text" class="form-control" placeholder="¿Buscas algo? Úsame!">
@@ -75,21 +75,25 @@
         </ul>
         <hr>
       </div>
-      {% for product in products %}
+      
       <div class="container">
         <div class="row">
-          <div class="col-sm">
+          {% for product in products %} 
+          <div class="col-lg-3" style="padding: 15px;">
             <div class="card" style="width: 18rem;">
-              <img src="{{ product.image }}" class="card-img-top" alt="...">
+              <img src="{{ product.imagen }}" class="card-img-top" alt="..." width="400" height="250">
               <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.description }}</p>
-                <a href="/products/{{ product.id }}" class="btn btn-primary form-control">Ver producto</a>
+                <h5 class="card-title">{{ product.nombre }}</h5>
+                <p class="card-text">{{ product.descripcion }}</p>
+                <a href="/products/{{ product.id }}" class="btn btn-primary">Ver producto</a>
+                <a href="/cart/add/{{ product.id }}" class="btn btn-primary">Comprar</a>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-      {% endfor %}
+      </div>
+      
     </main>
     <br><br>
     <footer class="footer fixed-bottom bg-dark text-light">

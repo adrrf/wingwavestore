@@ -18,7 +18,7 @@
   "pk": 2,
   "fields": {
     "nombre": "Baterias",
-    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "imagen": "https://i.imgur.com/WXnqAp1.jpg",
     "precio": 10.0,
     "descripcion": "Baterias para drones",
     "departamento": "Piezas",
@@ -31,10 +31,10 @@
   "model": "product.producto",
   "pk": 3,
   "fields": {
-    "nombre": "Cargador",
-    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "nombre": "Cargadores",
+    "imagen": "https://i.imgur.com/MSK8mWe.jpg",
     "precio": 10.0,
-    "descripcion": "Cargador para drones",
+    "descripcion": "Cargadores para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
     "fabricante": "AUTEL",
@@ -45,10 +45,10 @@
   "model": "product.producto",
   "pk": 4,
   "fields": {
-    "nombre": "Cámara",
-    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "nombre": "Controles",
+    "imagen": "https://i.imgur.com/YQ8v6zE.jpg",
     "precio": 10.0,
-    "descripcion": "Cámara para drones",
+    "descripcion": "Controles para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
     "fabricante": "AUTEL",
@@ -59,22 +59,8 @@
   "model": "product.producto",
   "pk": 5,
   "fields": {
-    "nombre": "Control",
-    "imagen": "https://i.imgur.com/rZ8myja.jpg",
-    "precio": 10.0,
-    "descripcion": "Control para drones",
-    "departamento": "Piezas",
-    "seccion": "Electronico",
-    "fabricante": "AUTEL",
-    "stock": 10
-  }
-},
-{
-  "model": "product.producto",
-  "pk": 6,
-  "fields": {
     "nombre": "Motores",
-    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "imagen": "https://i.imgur.com/NkK0J4A.jpg",
     "precio": 10.0,
     "descripcion": "Motores para drones",
     "departamento": "Piezas",
@@ -85,12 +71,12 @@
 },
 {
   "model": "product.producto",
-  "pk": 7,
+  "pk": 6,
   "fields": {
-    "nombre": "Cable",
-    "imagen": "https://i.imgur.com/rZ8myja.jpg",
+    "nombre": "Cables",
+    "imagen": "https://i.imgur.com/eFjih1Q.jpg",
     "precio": 10.0,
-    "descripcion": "Cable para drones",
+    "descripcion": "Cables para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
     "fabricante": "AUTEL",
