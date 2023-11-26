@@ -5,7 +5,7 @@
   "fields": {
     "nombre": "Hélices",
     "imagen": "https://i.imgur.com/rZ8myja.jpg",
-    "precio": 10.0,
+    "precio": 10.00,
     "descripcion": "Hélices para drones",
     "departamento": "Piezas",
     "seccion": "No-Electronico",
@@ -19,7 +19,7 @@
   "fields": {
     "nombre": "Baterias",
     "imagen": "https://i.imgur.com/WXnqAp1.jpg",
-    "precio": 10.0,
+    "precio": 10.00,
     "descripcion": "Baterias para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
@@ -33,7 +33,7 @@
   "fields": {
     "nombre": "Cargadores",
     "imagen": "https://i.imgur.com/MSK8mWe.jpg",
-    "precio": 10.0,
+    "precio": 10.00,
     "descripcion": "Cargadores para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
@@ -47,7 +47,7 @@
   "fields": {
     "nombre": "Controles",
     "imagen": "https://i.imgur.com/YQ8v6zE.jpg",
-    "precio": 10.0,
+    "precio": 10.00,
     "descripcion": "Controles para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
@@ -61,7 +61,7 @@
   "fields": {
     "nombre": "Motores",
     "imagen": "https://i.imgur.com/NkK0J4A.jpg",
-    "precio": 10.0,
+    "precio": 10.00,
     "descripcion": "Motores para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",
@@ -75,7 +75,7 @@
   "fields": {
     "nombre": "Cables",
     "imagen": "https://i.imgur.com/eFjih1Q.jpg",
-    "precio": 10.0,
+    "precio": 10.00,
     "descripcion": "Cables para drones",
     "departamento": "Piezas",
     "seccion": "Electronico",

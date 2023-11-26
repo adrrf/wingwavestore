@@ -19,7 +19,7 @@ from django.urls import path
 from src.views import home
 from user.views import register, login, me, datos_envio, datos_pago
 from django.contrib.auth.views import LogoutView
-from product.views import catalogo  
+from product.views import *  
 from cart.views import carrito, addCarrito, sumCarrito, restCarrito
 from order.views import checkout
 
@@ -30,6 +30,7 @@ urlpatterns = [
     path('user/login/', login, name='login'),
     path('user/logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('products/', catalogo, name='catalogo'),
+    path('products/<int:producto_id>/', vista_producto, name='vistaProducto'),
     path('user/me/', me, name='me'),
     path('user/datos_envio/', datos_envio, name='datos_envio'),
     path('user/datos_pago/', datos_pago, name='datos_pago'),
