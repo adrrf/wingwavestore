@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from src.views import home
-from user.views import register, login, logout, me, datos_envio, datos_pago
+from user.views import register, login, me, datos_envio, datos_pago
 from django.contrib.auth.views import LogoutView
 from product.views import catalogo  
+from cart.views import carrito, addCarrito, sumCarrito, restCarrito
+from order.views import checkout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +32,9 @@ urlpatterns = [
     path('products/', catalogo, name='catalogo'),
     path('user/me/', me, name='me'),
     path('user/datos_envio/', datos_envio, name='datos_envio'),
-    path('user/datos_pago/', datos_pago, name='datos_pago'),]
+    path('user/datos_pago/', datos_pago, name='datos_pago'),
+    path('cart/', carrito, name='cart'),
+    path('cart/add/<int:producto_id>/', addCarrito, name='addCarrito'),
+    path('cart/sum/<int:producto_id>/', sumCarrito, name='sumCarrito'),
+    path('cart/dec/<int:producto_id>/', restCarrito, name='restCarrito'),
+    path('order/checkout/', checkout, name='checkout'),]

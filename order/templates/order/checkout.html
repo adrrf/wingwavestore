@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src='https://i.imgur.com/PIcGWQs.png' alt="" width="75" height="75">
+            <h2>WingWave Store</h2>
+      <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Tu carrito</span>
+          </h4>
+          <ul class="list-group mb-3">
+            {% for item in items %}
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0">{{ item.producto.nombre }}</h6>
+                <small class="text-muted">x {{item.cantidad}}</small>
+              </div>
+              <span class="text-muted">{{item.total |floatformat:2}} €</span>
+            </li>
+            {% endfor %}
+            {% if envio == 0%}
+            <li class="list-group-item d-flex justify-content-between bg-light">
+              <div class="text-success">
+                <h6 class="my-0">Envio gratis</h6>
+              </div>
+              <span class="text-success">0 €</span>
+            </li>
+            {% else %}
+            <li class="list-group-item d-flex justify-content-between bg-light">
+              <div class="text">
+                <h6 class="my-0">Envio</h6>
+              </div>
+              <span class="text">4,99 €</span>
+            </li>
+            {% endif %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total (IVA incluido)</span>
+              <strong>{{total_envio|floatformat:2}} €</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-7 col-lg-8">
+            {% for message in messages %}
+                <div class="alert {{ message.tags}} alert-dismissible shadow fade show" role="alert">
+                    {{ message | safe }}
+                </div>
+            {% endfor %}
+          <h4 class="mb-3">Datos de envío</h4>
+          <form class="needs-validation" novalidate="" method="POST">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" placeholder="" value="{{cliente.user.first_name}}" required="">
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" name="apellidos" placeholder="" value="{{cliente.user.last_name}}" required="">
+              </div>
+  
+              <div class="col-12">
+                <label for="email" class="form-label">Email</span></label>
+                <input type="email" class="form-control" name="email" value="{{cliente.user.email}}" placeholder="you@example.com">
+              </div>
+  
+              <div class="col-12">
+                <label for="calle" class="form-label">Calle</label>
+                <input type="text" class="form-control" name="calle" value="{{cliente.user.datos_envio.calle}}" placeholder="" required="">
+              </div>
+  
+              <div class="col-md-4">
+                <label for="numero" class="form-label">Número</span></label>
+                <input type="number" class="form-control" value="{{cliente.user.datos_envio.numero}}" name="numero" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="puerta" class="form-label">Puerta</span></label>
+                <input type="number" class="form-control" value="{{cliente.user.datos_envio.puerta}}" name="puerta" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="codigopostal" class="form-label">Código postal</label>
+                <input type="number" class="form-control" value="{{cliente.user.datos_envio.codigo_postal}}" name="codigopostal" placeholder="" required="">
+              </div>
+              <div class="col-md-4">
+                <label for="ciudad" class="form-label">Ciudad</span></label>
+                <input type="text" class="form-control" value="{{cliente.user.datos_envio.ciudad}}" name="ciudad" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="provincia" class="form-label">Provincia</span></label>
+                <input type="text" class="form-control" value="{{cliente.user.datos_envio.provincia}}" name="provincia" placeholder="">
+              </div>
+
+  
+              <div class="col-md-4">
+                <label for="pais" class="form-label"> País </label>
+                <input type="text" class="form-control" name="pais" value="{{cliente.user.datos_envio.pais}}" placeholder="" required="">
+              </div>
+            </div>
+  
+            <hr class="my-4">
+  
+            <h4 class="mb-3">Pago</h4>
+  
+            <div class="my-3">
+                <select name="pago" class="form-select" aria-label="Default select example">
+                    <option value="0">Contrareembolso</option>
+                    <option value="1">Tarjeta</option>
+                </select>
+            </div>
+  
+  
+            <hr class="my-4">
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Realizar pedido</button>
+          </form>
+        </div>
+      </div>
+      <br>
+        <br>
+      <footer class="footer fixed-bottom bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                </ul>
+                <div class="col-md-6 d-flex justify-content-md-start">
+                    <p class="text-body-secondary">© 2023 WingWave Store</p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-md-end">
+                    <div class="row">
+                        <div class="col-md-4">
+                          <a href="https://maps.app.goo.gl/69U7wHqEWDmRFJH18" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit" class="text-body-secondary mx-3">📍</a>
+                        </div>
+                        <div class="col-md-4">
+                          <a href="mailto:wingwave@mystore.com" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit" class="text-body-secondary mx-3">✉️</a>
+                        </div>
+                        <div class="col-md-4">
+                          <a href="tel:+612612612" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit" class="text-body-secondary mx-3">☎️</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </main>
+  </div>
+    
+  
+  
