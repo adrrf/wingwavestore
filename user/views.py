@@ -87,6 +87,9 @@ def logoutUser(request):
 def me(request):
     return render(request, 'user/me.html')
 
+def mis_pedidos(request):
+    return render(request, 'user/mis_pedidos.html')
+
 def datos_envio(request):
     if request.method == 'GET':
         user = request.user
