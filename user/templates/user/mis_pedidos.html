@@ -51,10 +51,10 @@
             <a href="/user/datos_envio" class="nav-link link-body-emphasis">Datos de envío</a>
           </li>
           <li>
-            <a href="/user/datos_pago" class="nav-link active ">Datos de pago</a>
+            <a href="/user/datos_pago" class="nav-link link-body-emphasis ">Datos de pago</a>
           </li>
           <li>
-            <a href="/user/mis_pedidos" class="nav-link link-body-emphasis">Mis pedidos</a>
+            <a href="/user/mis_pedidos" class="nav-link active">Mis pedidos</a>
           </li>
           <li>
             <a href="#" class="nav-link link-body-emphasis">Mis reclamaciones</a>
@@ -65,40 +65,49 @@
         </ul>
         <hr>
       </div>
-        <div class="container-fluid d-flex m-5">
-            <div class="col-md-8">
-                <h1 class="mb-4">Registrar Datos de Pago</h1>
-                {% for message in messages %}
-                    <div class="alert {{ message.tags }} alert-dismissible shadow fade show" role="alert">
-                        {{ message | safe }}
+      <div class="col-md-8">
+        <div class="card mb-4">
+           <div class="card-header py-3">
+              <h5 class="mb-0">Mis Pedidos</h5>
+           </div>
+           <div class="card-body">
+              {% for item in items %}
+              <div class="card mb-3">
+                 <div class="row g-0">
+                    <!-- Imagen del producto -->
+                    <div class="col-md-3">
+                       <img src="{{ item.producto.imagen }}" class="img-fluid rounded-start" alt="{{ item.producto.nombre }}">
                     </div>
-                {% endfor %}
-                <form method="post" class="form">
-                    {% csrf_token %}
-                    <div class="form-floating mb-3">
-                        <input type="titular" name="titular" class="form-control rounded-3" id="floatingInput" placeholder="Titular" value={{titular}}>
-                        <label for="floatingInput">Titular</label>
+                    <!-- Detalles del pedido -->
+                    <div class="col-md-9">
+                       <div class="card-body">
+                          <h5 class="card-title">{{ item.producto.nombre }}</h5>
+                          <p class="card-text">{{ item.producto.descripcion }}</p>
+                          <p class="card-text"><strong>Cantidad:</strong> {{ item.cantidad }}</p>
+                          <p class="card-text"><strong>Precio:</strong> {{ item.producto.precio|floatformat:2 }} €</p>
+                          <p class="card-text"><strong>Fecha:</strong> {{ item.fecha }}</p>
+                          <!-- Estado del pedido -->
+                          <p class="card-text">
+                             {% with days_passed=item.dias_transcurridos %}
+                                {% if days_passed < 1 %}
+                                   <span class="badge bg-warning text-dark">En procesamiento</span>
+                                {% elif days_passed >= 1 and days_passed < 2 %}
+                                   <span class="badge bg-info">En preparación</span>
+                                {% elif days_passed >= 2 %}
+                                   <span class="badge bg-success">Enviado</span>
+                                {% endif %}
+                             {% endwith %}
+                          </p>
+                       </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="numero_tarjeta" name="numero_tarjeta" class="form-control rounded-3" id="floatingInput" placeholder="numero_tarjeta" value={{numero_tarjeta}}>
-                        <label for="floatingInput">Número de tarjeta</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="caducidad" name="caducidad" class="form-control rounded-3" id="floatingInput" placeholder="caducidad" value={{caducidad}}>
-                        <label for="floatingInput">Caducidad</label>
-                      </div>
-                    <div class="form-floating mb-3">
-                      <input type="cs" name="cs" class="form-control rounded-3" id="floatingInput" placeholder="cs" value={{cs}}>
-                      <label for="floatingInput">Código de seguridad</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar Datos</button>
-                  </form>
-                  <br>
-                  <br>
-            </div>
+                 </div>
+              </div>
+              {% endfor %}              
+           </div>
         </div>
+     </div>
     </main>
-    <footer class="footer fixed-bottom bg-dark text-light">
+      <footer class="footer fixed-bottom bg-dark text-light">
         <div class="container">
             <div class="row">
                 <ul class="nav justify-content-center border-bottom pb-3 mb-3">
