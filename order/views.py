@@ -6,6 +6,8 @@ from cart.models import ProductoPedido
 from product.models import Producto
 from user.models import Cliente
 from user.models import Datos_envio
+import stripe
+from django.conf import settings
 # Create your views here.
 
 def checkout(request):
@@ -23,6 +25,8 @@ def checkout(request):
         if order.productopedido_set.all().count() == 0:
             return redirect('catalogo')
         items = order.productopedido_set.all()
+        if items.count() == 0:
+            return redirect('catalogo')
         total = 0
         for item in items:
             total += item.producto.precio * item.cantidad
@@ -48,7 +52,7 @@ def checkout(request):
         ciudad = request.POST['ciudad']
         provincia = request.POST['provincia']
         pais = request.POST['pais']
-        pago = request.POST['pago']
+        pago = bool(eval(request.POST['pago']))
 
         if nombre == '' or apellidos == '' or email == '' or calle == '' or numero == '' or codigo_postal == '' or ciudad == '' or provincia == '' or pais == '' or pago == '':
             messages.error(request, 'Por favor, rellene todos los campos')
@@ -87,7 +91,33 @@ def checkout(request):
                     producto = Producto.objects.get(id=item.producto.id)
                     producto.stock -= item.cantidad
                     producto.save()
-                messages.success(request, 'Pedido realizado correctamente')
-                #redirect to pedidos detail
-                return redirect('home')
-        return render(request, 'order/checkout.html')
+                if order.metodo_pago:
+                    stripe.api_key = settings.STRIPE_SECRET_KEY
+                    domain = request.build_absolute_uri('/')[:-1]
+                    checkout_session = stripe.checkout.Session.create(
+                        payment_method_types=['card'],
+                        line_items=[{
+                            'price_data': {
+                                'currency': 'eur',
+                                'unit_amount': int((order.total + order.precio_envio) * 100),
+                                'product_data': {
+                                    'name': 'Compra en WingWave Store',
+                                },
+                            },
+                            'quantity': 1,
+                        }],
+                        mode='payment',
+                        success_url= domain + '/order/' + str(order.id),
+                        cancel_url= domain + '/order/checkout/',
+                        )
+                    order.stripe_id = checkout_session.id
+                    order.save()
+                    return redirect(checkout_session.url, code=303)
+        return redirect('orderdetail', order.id)
+
+def details(request, order_id):
+    order = Pedido.objects.get(completado=True, id=order_id)
+    items = order.productopedido_set.all()
+    total_envio = order.total + order.precio_envio
+    context = {'items': items, 'order': order, 'total_envio': total_envio}
+    return render(request, 'order/details.html', context)

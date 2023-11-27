@@ -1,0 +1,2 @@
+STRIPE_PUBLIC_KEY=public
+STRIPE_SECRET_KEY=secret
