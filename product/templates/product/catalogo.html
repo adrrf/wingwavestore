@@ -88,8 +88,13 @@
               <div class="card-body">
                 <h5 class="card-title">{{ product.nombre }}</h5>
                 <p class="card-text">{{ product.descripcion }}</p>
+                <p class="card-text">Precio: {{ product.precio }}€</p>
+                {% if product.stock > 0 %}
                 <a href="/products/{{ product.id }}" class="btn btn-primary">Ver producto</a>
                 <a href="/cart/add/{{ product.id }}" class="btn btn-primary">Comprar</a>
+                {% else %}
+                <p class="card-text">PRODUCTO AGOTADO</p>
+                {% endif %}
               </div>
             </div>
           </div>

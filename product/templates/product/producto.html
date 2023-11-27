@@ -96,11 +96,14 @@
                 <p class="text-center"><b>Departamento: </b>{{ producto.departamento }} <br><b>Sección: </b>{{ producto.seccion }} <br><b>Fabricante: </b>{{ producto.fabricante }}</p><br>
                 <h3 class="text-center">Precio</h3>
                 <p class="text-center">{{ producto.precio }}€</p><br>
-                <form action="/cart/add" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="product_id" value="{{ producto.id }}">
-                    <button type="submit" class="btn btn-primary form-control">Añadir al carrito</button>
-                </form>
+                <div class="d-grid gap-2">
+                {% if producto.stock > 0%}
+                <a href="/cart/add/{{ product.id }}" class="btn btn-primary btn-lg">Comprar</a>
+                {% else %}
+                <a href="#" class="btn center btn-primary disabled btn-lg">Comprar</a>
+                <p class="text-center">AGOTADO</p><br>
+                {% endif %}
+              </div>
             </div>
         </div>
     </div>
