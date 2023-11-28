@@ -121,3 +121,19 @@ def details(request, order_id):
     total_envio = order.total + order.precio_envio
     context = {'items': items, 'order': order, 'total_envio': total_envio}
     return render(request, 'order/details.html', context)
+
+def search(request):
+    context = {'items': [], 'order': '', 'total_envio': ''}
+    if request.method == 'POST':
+        order_id = request.POST['order_id']
+        try:
+            order = Pedido.objects.get(id=order_id)
+            if not order.completado:
+                messages.error(request, 'El pedido no ha sido completado')
+            items = order.productopedido_set.all()
+            total_envio = order.total + order.precio_envio
+            context = {'items': items, 'order': order, 'total_envio': total_envio}
+        except:
+            messages.error(request, 'El pedido no existe')
+    return render(request, 'order/search.html', context)
+    

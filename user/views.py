@@ -6,10 +6,8 @@ from django.contrib.auth import login as auth_login
 import re
 from bs4 import BeautifulSoup
 from .models import Datos_envio, Datos_pago
-
-# Create your views here.
 from .forms import CreateUserForm, DatosEnvioForm
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -83,7 +81,8 @@ def logoutUser(request):
      if request.method=="POST":
         logout(request)
         return redirect('home')
-
+     
+@login_required(login_url='login')
 def me(request):
     return render(request, 'user/me.html')
 
