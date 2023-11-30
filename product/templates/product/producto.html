@@ -41,53 +41,53 @@
     
     </nav>
     <main class="d-flex flex-nowrap">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 280px; height: 82vh;">
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
-            <div class="nav-link active" aria-current="page">¿QUÉ ESTAS BUSCANDO?</div><br>
-          </li>
-          <li>
-            <a href="/products/piezas" class="nav-link link-body-emphasis">PIEZAS</a>
-          </li>
-          <li>
-            <a href="/products/drones" class="nav-link link-body-emphasis">DRONES</a>
-          </li>
-          <li>
-            <a href="/products/accesorios" class="nav-link link-body-emphasis">ACCESORIOS</a>
-          </li>
-          <li>
-            <br><input type="text" class="form-control" placeholder="¿Buscas algo? Úsame!">
-          </li>
-          <li>
-            <br><div class="nav-link link-body-emphasis">
-                <button class="dropbtn btn-primary form-control" onclick="toggleDropdown2()">ELIGE UNA MARCA</button>
-                <div class="dropdown-content2" style="display: none; font-size: large;">
-                <input type="checkbox" id="BJI" name="checkbox">
-                <label for="BJI">BJI</label><br>
-                <input type="checkbox" id="AUTEL" name="checkbox">
-                <label for="AUTEL">AUTEL</label><br>
-                <input type="checkbox" id="PIX4D" name="checkbox">
-                <label for="PIX4D">PIX4D</label><br>
-                </div>
-            </div><br>
-          </li>
-          <li>
-            <button onclick="aplicarFiltros()" class="btn btn-primary form-control">APLICAR FILTROS</button>
-          </li>
-        </ul>
-        <hr>
+      <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 280px; height: auto;">
+        <form method="GET">
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              <div class="nav-link active" aria-current="page">¿QUÉ ESTAS BUSCANDO?</div><br>
+            </li>
+            <li>
+              <a href="/products/piezas" class="nav-link link-body-emphasis">PIEZAS</a>
+            </li>
+            <li>
+              <a href="/products/drones" class="nav-link link-body-emphasis">DRONES</a>
+            </li>
+            <li>
+              <a href="/products/accesorios" class="nav-link link-body-emphasis">ACCESORIOS</a>
+            </li>
+            <li>
+              <br><input type="text" class="form-control" placeholder="¿Buscas algo? Úsame!" name="buscar">
+            </li>
+            <li>
+              <br><div class="nav-link link-body-emphasis">
+                  <button class="dropbtn btn-primary form-control" onclick="toggleDropdown2()" type="button">ELIGE UNA MARCA</button><hr>
+                  <div class="dropdown-content2" style="display: none; font-size: large;">
+                    {% for fabricante in choices_fabricante %}
+                    <input type="checkbox" name="marca" value="{{ fabricante }}">
+                    <label>{{ fabricante }}</label><br>
+                    {% endfor %}
+                  </div>
+              </div><br>
+            </li>
+            <li>
+              <button type="submit" class="btn btn-primary form-control" >APLICAR FILTROS</button>
+            </li>
+          </ul>
+          <hr>
+        </form>
       </div>
      
       <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center" style="padding-top: 10px;">{{ producto.nombre }}</h1>
+                <h1 class="text-center" style="padding-top: 20px;">{{ producto.nombre }}</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" class="img-fluid" width="450" height="450">
+                <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" class="img-fluid" width="450" height="450" style="padding-left: 80px;">
             </div>
             <div class="col-md-6">
                 <br><br><h3 class="text-center">Descripción</h3>
@@ -137,35 +137,14 @@
     </footer>
 
     <script>
-        function aplicarFiltros(){
-            var checkboxes = document.getElementsByName("checkbox");
-            var direccion = "http://127.0.0.1:8000/products";
-            var url = "";
-            var aux = "";
-
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                  aux+= "&"+ checkboxes[i].id;
-                }
-            }
-
-            url = direccion + aux + "=true";
-
-            if (url == direccion + "=true"){
-                url = direccion;
-            }
-
-            window.location.href = url;
-        } 
-
-        function toggleDropdown2() {
-            var dropdownContent = document.getElementsByClassName("dropdown-content2")[0];
-         if (dropdownContent.style.display === "none") {
+      function toggleDropdown2() {
+        var dropdownContent = document.getElementsByClassName("dropdown-content2")[0];
+        if (dropdownContent.style.display === "none") {
             dropdownContent.style.display = "block";
-         } else {
-            dropdownContent.style.display = "none";
-         }
+        } else {
+          dropdownContent.style.display = "none";
         }
-        </script>
+      }
+    </script>
 </body>
 </html>
