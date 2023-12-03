@@ -42,7 +42,7 @@
     </nav>
     <main class="d-flex flex-nowrap">
       <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 280px; height: auto;">
-        <form method="GET">
+        <form method="GET" action="/products">
           <hr>
           <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
@@ -68,8 +68,19 @@
                     <input type="checkbox" name="marca" value="{{ fabricante }}">
                     <label>{{ fabricante }}</label><br>
                     {% endfor %}
-                  </div>
-              </div><br>
+                  </div><hr>
+              </div>
+            </li>
+            <li>
+              <div class="nav-link link-body-emphasis">
+                  <button class="dropbtn btn-primary form-control" onclick="toggleDropdown()" type="button">ELIGE UNA SECCIÓN</button><hr>
+                  <div class="dropdown-content" style="display: none; font-size: large;">
+                    {% for seccion in choices_seccion %}
+                    <input type="checkbox" name="seccion" value="{{ seccion }}">
+                    <label>{{ seccion }}</label><br>
+                    {% endfor %}
+                  </div><hr>
+              </div>
             </li>
             <li>
               <button type="submit" class="btn btn-primary form-control" >APLICAR FILTROS</button>
@@ -98,7 +109,7 @@
                 <p class="text-center">{{ producto.precio }}€</p><br>
                 <div class="d-grid gap-2">
                 {% if producto.stock > 0%}
-                <a href="/cart/add/{{ product.id }}" class="btn btn-primary btn-lg">Comprar</a>
+                <a href="/cart/add/{{ producto.id }}" class="btn btn-primary btn-lg">Comprar</a>
                 {% else %}
                 <a href="#" class="btn center btn-primary disabled btn-lg">Comprar</a>
                 <p class="text-center">AGOTADO</p><br>
@@ -139,6 +150,15 @@
     <script>
       function toggleDropdown2() {
         var dropdownContent = document.getElementsByClassName("dropdown-content2")[0];
+        if (dropdownContent.style.display === "none") {
+            dropdownContent.style.display = "block";
+        } else {
+          dropdownContent.style.display = "none";
+        }
+      }
+      
+      function toggleDropdown() {
+        var dropdownContent = document.getElementsByClassName("dropdown-content")[0];
         if (dropdownContent.style.display === "none") {
             dropdownContent.style.display = "block";
         } else {
