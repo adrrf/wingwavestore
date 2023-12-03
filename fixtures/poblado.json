@@ -8,8 +8,8 @@
     "precio": 10.00,
     "descripcion": "Hélices para drones",
     "departamento": "Piezas",
-    "seccion": "No-Electronico",
-    "fabricante": "BJI",
+    "seccion": "Analogico",
+    "fabricante": "DJI",
     "stock": 10
   }
 },

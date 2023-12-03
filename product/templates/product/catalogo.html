@@ -68,8 +68,19 @@
                   <input type="checkbox" name="marca" value="{{ fabricante }}">
                   <label>{{ fabricante }}</label><br>
                   {% endfor %}
-                </div>
-            </div><br>
+                </div><hr>
+            </div>
+          </li>
+          <li>
+            <div class="nav-link link-body-emphasis">
+                <button class="dropbtn btn-primary form-control" onclick="toggleDropdown()" type="button">ELIGE UNA SECCIÓN</button><hr>
+                <div class="dropdown-content" style="display: none; font-size: large;">
+                  {% for seccion in choices_seccion %}
+                  <input type="checkbox" name="seccion" value="{{ seccion }}">
+                  <label>{{ seccion }}</label><br>
+                  {% endfor %}
+                </div><hr>
+            </div>
           </li>
           <li>
             <button type="submit" class="btn btn-primary form-control" >APLICAR FILTROS</button>
@@ -132,6 +143,15 @@
     <script>
       function toggleDropdown2() {
         var dropdownContent = document.getElementsByClassName("dropdown-content2")[0];
+        if (dropdownContent.style.display === "none") {
+            dropdownContent.style.display = "block";
+        } else {
+          dropdownContent.style.display = "none";
+        }
+      }
+      
+      function toggleDropdown() {
+        var dropdownContent = document.getElementsByClassName("dropdown-content")[0];
         if (dropdownContent.style.display === "none") {
             dropdownContent.style.display = "block";
         } else {

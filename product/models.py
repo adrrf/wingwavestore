@@ -16,7 +16,7 @@ class Producto(models.Model):
     departamento = models.CharField(max_length=255, choices= departamento_choices,)
     seccion_choices= [
         ("Electronico", "Electronico"),
-        ("No-Electronico", "No-Electronico"),
+        ("Analogico", "Analogico"),
         ("Carga", "Carga"),
         ("Vigilancia", "Vigilancia"),
         ("Fotografia", "Fotografia"),
