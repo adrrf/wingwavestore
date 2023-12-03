@@ -62,43 +62,36 @@
         </ul>
         <hr>
       </div>
-      <div class="col-md-8">
-        <div class="card mb-4">
-           <div class="card-header py-3">
-              <h5 class="mb-0">Mis Reclamaciones</h5>
-           </div>
-           <div class="card-body">
-              {% if reclamaciones %}
-                {% for reclamacion in reclamaciones %}
-                  <div class="card">
-                    <div class="card-header py-3">
-                      <h4 class="mb-0">Tu reclamacion {{reclamacion.id}} del {{ reclamacion.fecha }}.</h4>
-                      {%if reclamacion.estado%}
-                      <h5 class="mb-0">Estado: <strong>Cerrado</strong></h5>
-                      {%else %}
-                      <h5 class="mb-0">Estado: <strong>Abierto</strong></h5>
-                      {% endif %}
-                    </div>
-                    <div class="card-body">
-                      <a href="{% url 'ver_reclamacion' reclamacion.id %}"><button class="btn btn-primary d-inline-flex align-items-center" type="button">
-                        Ver reclamacion
-                      </button>
-                      </a>
-                    </div>
-                  </div>
-                {% endfor %}
-              {% else %}
-                <p>No hay reclamaciones.</p>
-              {% endif %}
-              <div class="card-body">
-                <a href="/user/add_reclamacion"><button class="btn btn-primary d-inline-flex align-items-center" type="button">
-                  Añadir reclamacion
-                </button>
-                </a>
-              </div> 
-           </div>
+      <div class="container mt-4">
+        <h2 class="mb-4">Reclamación #{{ reclamacion.id }}</h2>
+    
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">{{ reclamacion.mensaje }}</p>
+          </div>
         </div>
-     </div>
+    
+        <h3 class="mt-4">Mensajes:</h3>
+        <ul class="list-group">
+          {% for mensaje in mensajes %}
+            <li class="list-group-item">{{user.first_name}} ha escrito este mensaje: </li>
+            <li class="list-group-item">{{ mensaje }}</li>
+          {% endfor %}
+        </ul>
+    
+        {% if not reclamacion.cerrada %}
+          <form class="mt-4" method="post" action="{% url 'ver_reclamacion' reclamacion.id %}">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+              <input type="nuevo_mensaje" name="nuevo_mensaje" class="form-control rounded-3" id="floatingInput" placeholder="Mensaje" value={{nuevo_mensaje}}>
+              <label for="floatingInput">Mensaje</label>
+          </div>
+            <button type="submit" class="btn btn-primary">Agregar Mensaje</button>
+          </form>
+        {% endif %}
+    
+        <a href="{% url 'mis_reclamaciones' %}" class="btn btn-secondary mt-4">Volver a la Lista de Reclamaciones</a>
+      </div>
     </main>
     <footer class="footer fixed-bottom bg-dark text-light">
         <div class="container">

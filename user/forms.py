@@ -34,23 +34,19 @@ class DatosPagoForm(forms.ModelForm):
             'cs': 'Codigo de seguridad',
             }
 
-class ReclamacionForm(forms.Form):
+class ReclamacionForm(forms.ModelForm):
     class Meta:
         model = Reclamacion
-        fields = ['user', 'pedido_id', 'mensaje', 'estado']
+        fields = ['user', 'mensaje']
         labels= {
-            'user': 'Usuario',
-            'pedido_id': 'Id del pedido',
+            'user': 'User',
             'mensaje': 'Mensaje',
-            'estado': 'Estado'
         }
 
-class MensajeReclamacionForm(forms.Form):
+class MensajeReclamacionForm(forms.ModelForm):
     class Meta:
         model = MensajeReclamacion
-        fields =['reclamacion', 'user', 'mensaje']
+        fields =['mensaje']
         labels = {
-            'reclamacion': 'Reclamacion',
-            'user': 'Usuario',
             'mensaje': 'Mensaje'
         }

@@ -6,10 +6,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 import re
 from bs4 import BeautifulSoup
-from .models import Datos_envio, Datos_pago, Cliente
+from .models import Datos_envio, Datos_pago, Cliente, Reclamacion
 from order.models import Pedido
 # Create your views here.
-from .forms import CreateUserForm, DatosEnvioForm
+from .forms import CreateUserForm, DatosEnvioForm, ReclamacionForm, MensajeReclamacionForm
 
 # Create your views here.
 
@@ -202,5 +202,40 @@ def mis_pedidos(request):
 @login_required(login_url='login')
 def mis_reclamaciones(request):
     user = request.user
-    reclamaciones = Reclamacion.objects.filter(user= user)
-    return render(request, 'user/mis_reclamaciones.html', {'user': user, 'reclamaciones': reclamacion})
+    reclamaciones = Reclamacion.objects.filter(user=user)
+    return render(request, 'user/mis_reclamaciones.html', {'user': user, 'reclamaciones': reclamaciones})
+
+@login_required(login_url='login')
+def add_reclamacion(request):
+    if request.method == 'POST': 
+        error = ""
+        user = request.user
+        mensaje = request.POST.get('mensaje')
+        if not mensaje:
+            error += "El campo mensaje es obligatorio. "
+        if user and mensaje:
+            Reclamacion.objects.create(user=user, mensaje=mensaje)
+            return redirect('mis_reclamaciones')
+        if error:
+            messages.error(request, error)
+    return render(request, 'user/add_reclamacion.html')
+
+@login_required(login_url='login')
+def ver_reclamacion(request, reclamacion_id):
+    try:
+        reclamacion = Reclamacion.objects.get(pk=reclamacion_id)
+    except Reclamacion.DoesNotExist:
+        raise Http404("Reclamacion no encontrada")
+
+    mensajes = reclamacion.mensajes.split('\n') if reclamacion.mensajes else []
+
+    nuevo_mensaje_form = MensajeReclamacionForm()
+
+    if request.method == 'POST' and not reclamacion.estado:
+        nuevo_mensaje = request.POST.get('nuevo_mensaje')
+        if nuevo_mensaje:
+            mensajes.append(nuevo_mensaje)
+            reclamacion.mensajes = '\n'.join(mensajes)
+            reclamacion.save()
+
+    return render(request, 'user/ver_reclamacion.html', {'reclamacion': reclamacion, 'mensajes': mensajes, 'nuevo_mensaje_form': nuevo_mensaje_form})

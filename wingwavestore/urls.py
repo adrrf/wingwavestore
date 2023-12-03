@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from src.views import home
-from user.views import register, login, me, datos_envio, datos_pago, mis_pedidos, mis_reclamaciones
+from user.views import register, login, me, datos_envio, datos_pago, mis_pedidos, mis_reclamaciones, add_reclamacion, ver_reclamacion
 from django.contrib.auth.views import LogoutView
 from product.views import *  
 from cart.views import carrito, addCarrito, sumCarrito, restCarrito
@@ -46,4 +46,6 @@ urlpatterns = [
     path('order/<int:order_id>/', details, name='orderdetail'),
     path('user/mis_pedidos/', mis_pedidos, name='mis_pedidos'),
     path('orders/', search, name='searchorder'),
-    path('user/mis_reclamaciones/', mis_reclamaciones, name='mis_reclamaciones'),]
+    path('user/mis_reclamaciones/', mis_reclamaciones, name='mis_reclamaciones'),
+    path('user/add_reclamacion/', add_reclamacion, name='add_reclamacion'),
+    path('reclamacion/<int:reclamacion_id>/', ver_reclamacion, name='ver_reclamacion')]
