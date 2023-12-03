@@ -57,10 +57,7 @@
             <a href="/user/mis_pedidos" class="nav-link active">Mis pedidos</a>
           </li>
           <li>
-            <a href="#" class="nav-link link-body-emphasis">Mis reclamaciones</a>
-          </li>
-          <li>
-            <a href="#" class="nav-link link-body-emphasis">Mis opiniones</a>
+            <a href="/user/mis_reclamaciones" class="nav-link link-body-emphasis">Mis reclamaciones</a>
           </li>
         </ul>
         <hr>
@@ -71,38 +68,24 @@
               <h5 class="mb-0">Mis Pedidos</h5>
            </div>
            <div class="card-body">
-              {% for item in items %}
-              <div class="card mb-3">
-                 <div class="row g-0">
-                    <!-- Imagen del producto -->
-                    <div class="col-md-3">
-                       <img src="{{ item.producto.imagen }}" class="img-fluid rounded-start" alt="{{ item.producto.nombre }}">
+              {% if pedidos %}
+                {% for order in pedidos %}
+                  <div class="card">
+                    <div class="card-header py-3">
+                      <h4 class="mb-0">Tu pedido del {{ order.fecha }}.</h4>
+                      <h5 class="mb-0">Estado: <strong>{{ order.estado }}</strong></h5>
                     </div>
-                    <!-- Detalles del pedido -->
-                    <div class="col-md-9">
-                       <div class="card-body">
-                          <h5 class="card-title">{{ item.producto.nombre }}</h5>
-                          <p class="card-text">{{ item.producto.descripcion }}</p>
-                          <p class="card-text"><strong>Cantidad:</strong> {{ item.cantidad }}</p>
-                          <p class="card-text"><strong>Precio:</strong> {{ item.producto.precio|floatformat:2 }} €</p>
-                          <p class="card-text"><strong>Fecha:</strong> {{ item.fecha }}</p>
-                          <!-- Estado del pedido -->
-                          <p class="card-text">
-                             {% with days_passed=item.dias_transcurridos %}
-                                {% if days_passed < 1 %}
-                                   <span class="badge bg-warning text-dark">En procesamiento</span>
-                                {% elif days_passed >= 1 and days_passed < 2 %}
-                                   <span class="badge bg-info">En preparación</span>
-                                {% elif days_passed >= 2 %}
-                                   <span class="badge bg-success">Enviado</span>
-                                {% endif %}
-                             {% endwith %}
-                          </p>
-                       </div>
+                    <div class="card-body">
+                      <a href="/order/{{order.id }}"><button class="btn btn-primary d-inline-flex align-items-center" type="button">
+                        Ver pedido
+                      </button>
+                      </a>
                     </div>
-                 </div>
-              </div>
-              {% endfor %}              
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p>No hay pedidos disponibles.</p>
+              {% endif %}      
            </div>
         </div>
      </div>

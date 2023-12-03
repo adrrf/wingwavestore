@@ -3,12 +3,14 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
+from django.contrib.auth.decorators import login_required
 import re
 from bs4 import BeautifulSoup
-from .models import Datos_envio, Datos_pago
+from .models import Datos_envio, Datos_pago, Cliente
+from order.models import Pedido
 
 # Create your views here.
-from .forms import CreateUserForm, DatosEnvioForm
+from .forms import CreateUserForm, DatosEnvioForm, DatosPagoForm, ReclamacionForm
 
 # Create your views here.
 
@@ -79,17 +81,21 @@ def login(request):
 
     return render(request, 'user/login.html')
 
+@login_required(login_url='login')
 def logoutUser(request):
      if request.method=="POST":
         logout(request)
         return redirect('home')
 
+@login_required(login_url='login')
 def me(request):
     return render(request, 'user/me.html')
 
+@login_required(login_url='login')
 def mis_pedidos(request):
     return render(request, 'user/mis_pedidos.html')
 
+@login_required(login_url='login')
 def datos_envio(request):
     if request.method == 'GET':
         user = request.user
@@ -141,7 +147,8 @@ def datos_envio(request):
         if error:
             messages.error(request, error)
     return render(request, 'user/datos_envio.html')
-
+    
+@login_required(login_url='login')
 def datos_pago(request):
     if request.method == 'GET':
         user = request.user
@@ -187,3 +194,15 @@ def datos_pago(request):
         if error:
             messages.error(request, error)
     return render(request, 'user/datos_pago.html')
+
+@login_required(login_url='login')
+def mis_pedidos(request):
+    cliente = Cliente.objects.get(user= request.user)
+    pedidos = Pedido.objects.filter(cliente=cliente)
+    return render(request, 'user/mis_pedidos.html', {'cliente': cliente, 'pedidos': pedidos})
+
+@login_required(login_url='login')
+def mis_reclamaciones(request):
+    user = request.user
+    reclamaciones = Reclamacion.objects.filter(user= user)
+    return render(request, 'user/mis_reclamaciones.html', {'user': user, 'reclamaciones': reclamacion})

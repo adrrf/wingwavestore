@@ -48,7 +48,7 @@
             <a href="/user/me" class="nav-link link-body-emphasis" aria-current="page">Perfil de Usuario</a>
           </li>
           <li>
-            <a href="/user/datos_envio" class="nav-link active">Datos de envío</a>
+            <a href="/user/datos_envio" class="nav-link link-body-emphasis">Datos de envío</a>
           </li>
           <li>
             <a href="/user/datos_pago" class="nav-link link-body-emphasis">Datos de pago</a>
@@ -57,14 +57,14 @@
             <a href="/user/mis_pedidos" class="nav-link link-body-emphasis">Mis pedidos</a>
           </li>
           <li>
-            <a href="/user/mis_reclamaciones" class="nav-link link-body-emphasis">Mis reclamaciones</a>
+            <a href="/user/mis_reclamaciones" class="nav-link active">Mis reclamaciones</a>
           </li>
         </ul>
         <hr>
       </div>
         <div class="container-fluid d-flex m-5">
             <div class="col-md-8">
-                <h1 class="mb-4">Registrar Datos de Envío</h1>
+                <h1 class="mb-4">Registrar una reclamación</h1>
                 {% for message in messages %}
                     <div class="alert {{ message.tags }} alert-dismissible shadow fade show" role="alert">
                         {{ message | safe }}
@@ -72,38 +72,11 @@
                 {% endfor %}
                 <form method="post" class="form">
                     {% csrf_token %}
-                    <div class="form-floating mb-3">
-                        <input type="calle" name="calle" class="form-control rounded-3" id="floatingInput" placeholder="Calle" value={{calle}}>
-                        <label for="floatingInput">Calle</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="numero" name="numero" class="form-control rounded-3" id="floatingInput" placeholder="numero" value={{numero}}>
-                        <label for="floatingInput">Número</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="puerta" name="puerta" class="form-control rounded-3" id="floatingInput" placeholder="puerta" value={{puerta}}>
-                        <label for="floatingInput">Puerta</label>
-                      </div>
-                    <div class="form-floating mb-3">
-                      <input type="codigo_postal" name="codigo_postal" class="form-control rounded-3" id="floatingInput" placeholder="40000" value={{codigo_postal}}>
-                      <label for="floatingInput">Codigo postal</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                      <input type="provincia" name="provincia" class="form-control rounded-3" id="floatingPassword" placeholder="Provincia" value={{provincia}}>
-                      <label for="floatingPassword">Provincia</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="ciudad" name="ciudad" class="form-control rounded-3" id="floatingPassword" placeholder="Ciudad" value={{ciudad}}>
-                        <label for="floatingPassword">Ciudad</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="pais" name="pais" class="form-control rounded-3" id="floatingPassword" placeholder="Pais" value={{pais}}>
-                        <label for="floatingPassword">País</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar Datos</button>
-                  </form>
-                  <br>
-                  <br>
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Enviar reclamación</button>
+                </form>
+                <br>
+                <br>
             </div>
         </div>
     </main>

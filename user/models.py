@@ -22,3 +22,14 @@ class Datos_pago(models.Model):
     numero_tarjeta = models.CharField(max_length=255)
     caducidad = models.CharField(max_length=255)
     cs = models.IntegerField()
+
+class Reclamacion(models.Model):
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    mensaje = models.CharField(max_length=2550)
+    estado = models.BooleanField(default=False, null=True, blank=False)
+
+
+class MensajeReclamacion(models.Model):
+    reclamacion = models.ForeignKey(Reclamacion, on_delete= models.CASCADE)
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    mensaje = models.CharField(max_length=2550)
