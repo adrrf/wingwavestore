@@ -21,7 +21,7 @@ from user.views import register, login, me, datos_envio, datos_pago, mis_pedidos
 from django.contrib.auth.views import LogoutView
 from product.views import *  
 from cart.views import carrito, addCarrito, sumCarrito, restCarrito
-from order.views import checkout, details
+from order.views import checkout, details, search
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -31,6 +31,9 @@ urlpatterns = [
     path('user/login/', login, name='login'),
     path('user/logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('products/', catalogo, name='catalogo'),
+    path('products/accesorios', accesorios, name='accesorios'),
+    path('products/piezas', piezas, name='piezas'),
+    path('products/drones', drones, name='drones'),
     path('products/<int:producto_id>/', vista_producto, name='vistaProducto'),
     path('user/me/', me, name='me'),
     path('user/datos_envio/', datos_envio, name='datos_envio'),
@@ -42,4 +45,5 @@ urlpatterns = [
     path('order/checkout/', checkout, name='checkout'),
     path('order/<int:order_id>/', details, name='orderdetail'),
     path('user/mis_pedidos/', mis_pedidos, name='mis_pedidos'),
+    path('orders/', search, name='searchorder'),
     path('user/mis_reclamaciones/', mis_reclamaciones, name='mis_reclamaciones'),]

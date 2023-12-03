@@ -41,47 +41,48 @@
     
     </nav>
     <main class="d-flex flex-nowrap">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 280px; height: auto;">
-      <form method="GET">
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item">
-            <div class="nav-link active" aria-current="page">¿QUÉ ESTAS BUSCANDO?</div><br>
-          </li>
-          <li>
-            <a href="/products/piezas" class="nav-link link-body-emphasis">PIEZAS</a>
-          </li>
-          <li>
-            <a href="/products/drones" class="nav-link link-body-emphasis">DRONES</a>
-          </li>
-          <li>
-            <a href="/products/accesorios" class="nav-link link-body-emphasis">ACCESORIOS</a>
-          </li>
-          <li>
-            <br><input type="text" class="form-control" placeholder="¿Buscas algo? Úsame!" name="buscar">
-          </li>
-          <li>
-            <br><div class="nav-link link-body-emphasis">
-                <button class="dropbtn btn-primary form-control" onclick="toggleDropdown2()" type="button">ELIGE UNA MARCA</button><hr>
-                <div class="dropdown-content2" style="display: none; font-size: large;">
-                  {% for fabricante in choices_fabricante %}
-                  <input type="checkbox" name="marca" value="{{ fabricante }}">
-                  <label>{{ fabricante }}</label><br>
-                  {% endfor %}
-                </div>
-            </div><br>
-          </li>
-          <li>
-            <button type="submit" class="btn btn-primary form-control" >APLICAR FILTROS</button>
-          </li>
-        </ul>
-        <hr>
-      </form>
-    </div>
+      <div class="d-flex flex-column flex-shrink-0 p-3 bg-dark" style="width: 280px; height: auto;">
+        <form method="GET">
+          <hr>
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              <div class="nav-link active" aria-current="page">¿QUÉ ESTAS BUSCANDO?</div><br>
+            </li>
+            <li>
+              <a href="/products/piezas" class="nav-link link-body-emphasis">PIEZAS</a>
+            </li>
+            <li>
+              <a href="/products/drones" class="nav-link link-body-emphasis active">DRONES</a>
+            </li>
+            <li>
+              <a href="/products/accesorios" class="nav-link link-body-emphasis">ACCESORIOS</a>
+            </li>
+            <li>
+              <br><input type="text" class="form-control" placeholder="¿Buscas algo? Úsame!" name="buscar">
+            </li>
+            <li>
+              <br><div class="nav-link link-body-emphasis">
+                  <button class="dropbtn btn-primary form-control" onclick="toggleDropdown2()" type="button">ELIGE UNA MARCA</button><hr>
+                  <div class="dropdown-content2" style="display: none; font-size: large;">
+                    {% for fabricante in choices_fabricante %}
+                    <input type="checkbox" name="marca" value="{{ fabricante }}">
+                    <label>{{ fabricante }}</label><br>
+                    {% endfor %}
+                  </div>
+              </div><br>
+            </li>
+            <li>
+              <button type="submit" class="btn btn-primary form-control" >APLICAR FILTROS</button>
+            </li>
+          </ul>
+          <hr>
+        </form>
+      </div>
       
       <div class="container">
         <div class="row">
           {% for product in products %} 
+          {% if product.departamento == "Drones" %}
           <div class="col-lg-4" style="padding: 15px;">
             <div class="card" style="width: 18rem;">
               <img src="{{ product.imagen }}" class="card-img-top" alt="..." width="400" height="250">
@@ -90,14 +91,15 @@
                 <p class="card-text">{{ product.descripcion }}</p>
                 <p class="card-text">Precio: {{ product.precio }}€</p>
                 {% if product.stock > 0 %}
-                <a href="/products/{{ product.id }}" class="btn btn-primary">Ver producto</a>
-                <a href="/cart/add/{{ product.id }}" class="btn btn-primary">Comprar</a>
+                  <a href="/products/{{ product.id }}" class="btn btn-primary">Ver producto</a>
+                  <a href="/cart/add/{{ product.id }}" class="btn btn-primary">Comprar</a>
                 {% else %}
                 <p class="card-text">PRODUCTO AGOTADO</p>
                 {% endif %}
               </div>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>

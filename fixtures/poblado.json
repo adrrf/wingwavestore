@@ -82,4 +82,18 @@
     "fabricante": "AUTEL",
     "stock": 10
   }
+},
+{
+  "model": "product.producto",
+  "pk": 7,
+  "fields": {
+    "nombre": "Mavic 2 E.A.",
+    "imagen": "https://i.imgur.com/Iylzhnc.png",
+    "precio": 5990.00,
+    "descripcion": "Imágenes térmicas radiométricas de alta resolución: 640x512, cámara visual de 48MP y Zoom hasta 32x",
+    "departamento": "Drones",
+    "seccion": "Videografia",
+    "fabricante": "DJI",
+    "stock": 10
+  }
 }]

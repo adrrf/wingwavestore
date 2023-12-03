@@ -8,9 +8,8 @@ import re
 from bs4 import BeautifulSoup
 from .models import Datos_envio, Datos_pago, Cliente
 from order.models import Pedido
-
 # Create your views here.
-from .forms import CreateUserForm, DatosEnvioForm, DatosPagoForm, ReclamacionForm
+from .forms import CreateUserForm, DatosEnvioForm
 
 # Create your views here.
 
@@ -87,7 +86,6 @@ def logoutUser(request):
         logout(request)
         return redirect('home')
 
-@login_required(login_url='login')
 def me(request):
     return render(request, 'user/me.html')
 

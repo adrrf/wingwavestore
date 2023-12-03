@@ -6,6 +6,7 @@ from cart.models import ProductoPedido
 from product.models import Producto
 from user.models import Cliente
 from user.models import Datos_envio
+from django.core.mail import send_mail
 import stripe
 from django.conf import settings
 # Create your views here.
@@ -113,6 +114,7 @@ def checkout(request):
                     order.stripe_id = checkout_session.id
                     order.save()
                     return redirect(checkout_session.url, code=303)
+                send_mail('WingWave Store - Pedido realizado', 'Su pedido ha sido realizado correctamente', 'wingwavestore@gmail.com', [order.email], fail_silently=False)
         return redirect('orderdetail', order.id)
 
 def details(request, order_id):
@@ -121,3 +123,19 @@ def details(request, order_id):
     total_envio = order.total + order.precio_envio
     context = {'items': items, 'order': order, 'total_envio': total_envio}
     return render(request, 'order/details.html', context)
+
+def search(request):
+    context = {'items': [], 'order': '', 'total_envio': ''}
+    if request.method == 'POST':
+        order_id = request.POST['order_id']
+        try:
+            order = Pedido.objects.get(id=order_id)
+            if not order.completado:
+                messages.error(request, 'El pedido no ha sido completado')
+            items = order.productopedido_set.all()
+            total_envio = order.total + order.precio_envio
+            context = {'items': items, 'order': order, 'total_envio': total_envio}
+        except:
+            messages.error(request, 'El pedido no existe')
+    return render(request, 'order/search.html', context)
+    
