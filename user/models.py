@@ -18,11 +18,7 @@ class Datos_envio(models.Model):
 
 class Datos_pago(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    titular = models.CharField(max_length=255)
-    numero_tarjeta = models.CharField(max_length=255)
-    caducidad = models.CharField(max_length=255)
-    cs = models.IntegerField()
-
+    tarjeta = models.BooleanField(null=True)
 class Reclamacion(models.Model):
     user = models.ForeignKey(User, on_delete= models.CASCADE, null=True)
     fecha = models.DateTimeField(auto_now_add=True)

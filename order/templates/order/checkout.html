@@ -114,7 +114,7 @@
             <div class="my-3">
                 <select name="pago" class="form-select" aria-label="Default select example">
                     <option value="False">Contrareembolso</option>
-                    <option value="True">Tarjeta</option>
+                    <option value="True" {%if cliente.user.datos_pago.tarjeta %} selected="selected" {%endif%}>Tarjeta</option>
                 </select>
             </div>
   

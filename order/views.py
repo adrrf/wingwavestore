@@ -154,7 +154,7 @@ def search(request):
     if request.method == 'POST':
         order_id = request.POST['order_id']
         try:
-            order = Pedido.objects.get(id=order_id)
+            order = Pedido.objects.get(id=order_id, completado=True)
             if not order.completado:
                 messages.error(request, 'El pedido no ha sido completado')
             items = order.productopedido_set.all()
