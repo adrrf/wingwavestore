@@ -56,13 +56,13 @@ def checkout(request):
         pago = bool(eval(request.POST['pago']))
 
         if nombre == '' or apellidos == '' or email == '' or calle == '' or numero == '' or codigo_postal == '' or ciudad == '' or provincia == '' or pais == '' or pago == '':
-            print('error')
             messages.error(request, 'Por favor, rellene todos los campos')
         else:
             #validate mail regex
             email_valid = re.search(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email)
             if not email_valid:
                 messages.error(request, 'El email no es válido')
+                return redirect('checkout')
             else:
                 try:
                     user = request.user
