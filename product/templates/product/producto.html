@@ -93,7 +93,7 @@
       <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center" style="padding-top: 20px;">{{ producto.nombre }}</h1>
+                <h1 class="text-center" style="padding-top: 20px;">{{ producto.nombre }}</h1><hr>
             </div>
         </div>
         <div class="row">
@@ -123,12 +123,16 @@
                 <a href="#" class="btn center btn-primary disabled btn-lg">Comprar</a>
                 <p class="text-center">AGOTADO</p><br>
                 {% endif %}
-                <a href="{% url 'add_opinion' producto.id %}">
-                  <button class="btn btn-primary btn-lg">Añadir Opinión</button>
-                </a>
               </div>
             </div>
         </div>
+        <br><hr>
+        <div align="center">
+          <a href="{% url 'add_opinion' producto.id %}">
+            <button class="btn btn-primary btn-lg">Añadir Opinión</button>
+          </a>
+        </div>
+        <br>
         <div class="row">
           <div class="col-md-12">
               <h3 class="text-center">Opiniones del Producto</h3>
