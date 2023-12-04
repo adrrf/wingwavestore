@@ -167,7 +167,7 @@ def add_opinion(request, producto_id):
     try:
         producto = Producto.objects.get(pk=producto_id)
     except Producto.DoesNotExist:
-        raise Http404("Reclamacion no encontrada")
+        return redirect('catalogo')
     if request.method == 'POST':
         mensaje = request.POST.get('mensaje')
         

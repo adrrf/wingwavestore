@@ -100,9 +100,21 @@
                 <h5 class="card-title">{{ product.nombre }}</h5>
                 <p class="card-text">{{ product.descripcion }}</p>
                 <p class="card-text">Precio: {{ product.precio }}€</p>
-                {% if product.stock > 0 %}
                 <a href="/products/{{ product.id }}" class="btn btn-primary">Ver producto</a>
-                <a href="/cart/add/{{ product.id }}" class="btn btn-primary">Comprar</a>
+                {% if product.stock > 0 %}
+                <form method="POST" action="/cart/add/">
+                  {% csrf_token %}
+                  
+                  <div class="input-group mb-3">
+                    <input type="hidden" name="producto_id" value="{{ product.id }}">
+                    <input min="1" max={{product.stock}} type="number" value="1" name="cantidad" class="form-control" />
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-primary">Añadir al carrito</button>
+                    </div>
+                  </div>
+
+                  
+                </form>
                 {% else %}
                 <p class="card-text">PRODUCTO AGOTADO</p>
                 {% endif %}

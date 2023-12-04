@@ -56,6 +56,7 @@ def checkout(request):
         pago = bool(eval(request.POST['pago']))
 
         if nombre == '' or apellidos == '' or email == '' or calle == '' or numero == '' or codigo_postal == '' or ciudad == '' or provincia == '' or pais == '' or pago == '':
+            print('error')
             messages.error(request, 'Por favor, rellene todos los campos')
         else:
             #validate mail regex
@@ -114,8 +115,32 @@ def checkout(request):
                     order.stripe_id = checkout_session.id
                     order.save()
                     return redirect(checkout_session.url, code=303)
-                send_mail('WingWave Store - Pedido realizado', 'Su pedido ha sido realizado correctamente', 'wingwavestore@gmail.com', [order.email], fail_silently=False)
-        return redirect('orderdetail', order.id)
+                texto = 'Hola ' + order.nombre + ' ' + order.apellido + ',\n\n' + 'Gracias por realizar tu pedido en WingWave Store.\n\n' + 'Tu pedido:\n\n'
+                items = order.productopedido_set.all()
+                for item in items:
+                    texto += item.producto.nombre + ' x' + str(item.cantidad) + '\n'
+                texto += '\nPrecio total: ' + str(order.total) + '€\n'
+                texto += 'Precio envío: ' + str(order.precio_envio) + '€\n'
+                texto += 'Precio total con envío: ' + str(order.total + order.precio_envio) + '€\n\n'
+                texto += 'Datos de envío:\n\n'
+                texto += 'Nombre: ' + order.nombre + ' ' + order.apellido + '\n'
+                texto += 'Email: ' + order.email + '\n'
+                texto += 'Calle: ' + order.calle + '\n'
+                texto += 'Número: ' + order.numero + '\n'
+                texto += 'Puerta: ' + order.puerta + '\n'
+                texto += 'Código postal: ' + order.codigo_postal + '\n'
+                texto += 'Ciudad: ' + order.ciudad + '\n'
+                texto += 'Provincia: ' + order.provincia + '\n'
+                texto += 'País: ' + order.pais + '\n\n'
+                texto += 'Método de pago: '
+                if order.metodo_pago:
+                    texto += 'Tarjeta de crédito\n\n'
+                else:
+                    texto += 'Contrareembolso\n\n'
+                texto += 'Si tienes alguna duda, puedes contactar con nosotros en nuestra web'
+                send_mail('WingWave Store - Pedido realizado', texto, 'wingwavestore@gmail.com', [order.email], fail_silently=False)
+            return redirect('orderdetail', order.id)
+        return redirect('checkout')
 
 def details(request, order_id):
     order = Pedido.objects.get(completado=True, id=order_id)

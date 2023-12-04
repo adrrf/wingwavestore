@@ -36,31 +36,38 @@ def carrito(request):
     context = {'items': items, 'order': order, 'total': total, 'envio': envio, 'total_envio': total + envio, 'checkout': checkout}
     return render(request, 'cart/carrito.html', context)
 
-def addCarrito(request, producto_id):
-    producto = Producto.objects.get(id=producto_id)
-    if producto.stock == 0:
-        return redirect('cart')
-    try:
-        user = request.user
-        cliente, created = Cliente.objects.get_or_create(user=user)
-        device = request.COOKIES['device']
-        cliente.device = device
-        cliente.save()
-    except:
-        device = request.COOKIES['device']
-        cliente, created = Cliente.objects.get_or_create(dispositivo=device)
-    order, created = Pedido.objects.get_or_create(cliente=cliente, completado=False)
-    orderItem, created = ProductoPedido.objects.get_or_create(producto=producto, pedido=order)
-    if not orderItem.cantidad:
-        orderItem.cantidad = 1
-    else:
-        orderItem.cantidad = orderItem.cantidad + 1
-    orderItem.save()
+def addCarrito(request):
     if request.method == 'POST':
+        producto_id = request.POST['producto_id']
         cantidad = request.POST['cantidad']
-        orderItem.cantidad = cantidad
-    orderItem.save()
-    return redirect('cart')
+        if not cantidad:
+            cantidad = 1
+        else:
+            cantidad = int(cantidad)
+        producto = Producto.objects.get(id=producto_id)
+        if producto.stock == 0:
+            return redirect('cart')
+        try:
+            user = request.user
+            cliente, created = Cliente.objects.get_or_create(user=user)
+            device = request.COOKIES['device']
+            cliente.device = device
+            cliente.save()
+        except:
+            device = request.COOKIES['device']
+            cliente, created = Cliente.objects.get_or_create(dispositivo=device)
+        order, created = Pedido.objects.get_or_create(cliente=cliente, completado=False)
+        orderItem, created = ProductoPedido.objects.get_or_create(producto=producto, pedido=order)
+        if not orderItem.cantidad:
+            orderItem.cantidad = cantidad
+        else:
+            if orderItem.cantidad + cantidad > producto.stock:
+                messages.warning(request, 'No hay stock disponible')
+                return redirect('cart')
+            else:
+                orderItem.cantidad = orderItem.cantidad + cantidad
+        orderItem.save()
+        return redirect('cart')
 
 def sumCarrito(request, producto_id):
     producto = Producto.objects.get(id=producto_id)

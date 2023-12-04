@@ -109,7 +109,16 @@
                 <p class="text-center">{{ producto.precio }}€</p><br>
                 <div class="d-grid gap-2">
                 {% if producto.stock > 0%}
-                <a href="/cart/add/{{ producto.id }}" class="btn btn-primary btn-lg">Comprar</a>
+                <form method="POST" action="/cart/add/">
+                  {% csrf_token %}
+                  <div class="input-group mb-3">
+                    <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                    <input min="1" max={{producto.stock}} type="number" value="1" name="cantidad" class="form-control" />
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-primary">Añadir al carrito</button>
+                    </div>
+                  </div>
+                </form>
                 {% else %}
                 <a href="#" class="btn center btn-primary disabled btn-lg">Comprar</a>
                 <p class="text-center">AGOTADO</p><br>
@@ -136,6 +145,8 @@
               {% else %}
                   <p class="text-center">No hay opiniones disponibles.</p>
               {% endif %}
+              <br>
+
           </div>
       </div>
     </div>
