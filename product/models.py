@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Producto(models.Model):
@@ -41,3 +41,10 @@ class Producto(models.Model):
     ]
     fabricante = models.CharField(max_length=255, choices= fabricante_choices,)
     stock = models.IntegerField()
+
+
+class Opinion(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='opiniones')
+    mensaje = models.CharField(max_length=255)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)

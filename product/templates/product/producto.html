@@ -114,9 +114,30 @@
                 <a href="#" class="btn center btn-primary disabled btn-lg">Comprar</a>
                 <p class="text-center">AGOTADO</p><br>
                 {% endif %}
+                <a href="{% url 'add_opinion' producto.id %}">
+                  <button class="btn btn-primary btn-lg">Añadir Opinión</button>
+                </a>
               </div>
             </div>
         </div>
+        <div class="row">
+          <div class="col-md-12">
+              <h3 class="text-center">Opiniones del Producto</h3>
+  
+              {% if opiniones %}
+                  <ul class="list-group">
+                      {% for opinion in opiniones %}
+                          <li class="list-group-item">
+                              <strong>{{ opinion.usuario.first_name }}</strong> escribió el {{ opinion.fecha_creacion }}:<br>
+                              {{ opinion.mensaje }}
+                          </li>
+                      {% endfor %}
+                  </ul>
+              {% else %}
+                  <p class="text-center">No hay opiniones disponibles.</p>
+              {% endif %}
+          </div>
+      </div>
     </div>
 
       

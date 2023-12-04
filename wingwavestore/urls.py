@@ -19,7 +19,7 @@ from django.urls import path
 from src.views import home
 from user.views import register, login, me, datos_envio, datos_pago, mis_pedidos, mis_reclamaciones, add_reclamacion, ver_reclamacion
 from django.contrib.auth.views import LogoutView
-from product.views import *  
+from product.views import catalogo, accesorios, drones, piezas, vista_producto, add_opinion
 from cart.views import carrito, addCarrito, sumCarrito, restCarrito
 from order.views import checkout, details, search
 from django.contrib.auth import views as auth_views
@@ -48,4 +48,5 @@ urlpatterns = [
     path('orders/', search, name='searchorder'),
     path('user/mis_reclamaciones/', mis_reclamaciones, name='mis_reclamaciones'),
     path('user/add_reclamacion/', add_reclamacion, name='add_reclamacion'),
-    path('reclamacion/<int:reclamacion_id>/', ver_reclamacion, name='ver_reclamacion')]
+    path('reclamacion/<int:reclamacion_id>/', ver_reclamacion, name='ver_reclamacion'),
+    path('product/add_opinion/<int:producto_id>/', add_opinion, name='add_opinion')]

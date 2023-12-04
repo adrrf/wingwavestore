@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from .models import Producto
+from django.shortcuts import render, redirect
+from .models import Producto, Opinion
 from django.db.models import Q
+from django.urls import reverse
+from django.contrib import messages
 
 
 # Create your views here.
@@ -131,6 +133,7 @@ def piezas(request):
 def vista_producto(request, producto_id):
     producto = Producto.objects.get(id=producto_id)
     products = Producto.objects.all()
+    opiniones = Opinion.objects.filter(producto= producto)
     choices_fabricante = Producto.fabricante.field.choices
     choices_seccion = Producto.seccion.field.choices
     lista_fabricante = []
@@ -157,5 +160,28 @@ def vista_producto(request, producto_id):
             Q(seccion__icontains=seccion)
         ).distinct()
     
-    context = {'producto': producto, 'choices_fabricante': lista_fabricante, 'choices_seccion': lista_seccion, 'products': products}
+    context = {'producto': producto, 'choices_fabricante': lista_fabricante, 'choices_seccion': lista_seccion, 'products': products, 'opiniones': opiniones}
     return render(request, 'product/producto.html', context)
+
+def add_opinion(request, producto_id):
+    try:
+        producto = Producto.objects.get(pk=producto_id)
+    except Producto.DoesNotExist:
+        raise Http404("Reclamacion no encontrada")
+    if request.method == 'POST':
+        mensaje = request.POST.get('mensaje')
+        
+        if mensaje:
+            usuario = request.user if request.user.is_authenticated else None
+
+            # Guardar la opinión en la base de datos
+            opinion = Opinion.objects.create(
+                mensaje=mensaje,
+                producto_id=producto_id,
+                usuario=usuario
+            )
+            
+            messages.success(request, '¡Opinión añadida exitosamente!')
+            return redirect(reverse('vistaProducto', args=[producto_id]))
+
+    return render(request, 'product/add_opinion.html', {'producto': producto})
