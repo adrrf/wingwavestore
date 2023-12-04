@@ -6,7 +6,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 import re
 from bs4 import BeautifulSoup
-from .models import Datos_envio, Datos_pago, Cliente, Reclamacion
+from .models import Datos_envio, Datos_pago, Cliente, Reclamacion, MensajeReclamacion
 from order.models import Pedido
 # Create your views here.
 from .forms import CreateUserForm, DatosEnvioForm, ReclamacionForm, MensajeReclamacionForm
@@ -200,20 +200,19 @@ def add_reclamacion(request):
 
 @login_required(login_url='login')
 def ver_reclamacion(request, reclamacion_id):
-    try:
-        reclamacion = Reclamacion.objects.get(pk=reclamacion_id)
-    except Reclamacion.DoesNotExist:
-        raise Http404("Reclamacion no encontrada")
+    user = request.user
+    reclamacion = Reclamacion.objects.filter(id=reclamacion_id, user=user).first()
+    if reclamacion == None:
+        return redirect('mis_reclamaciones')
+    else:
+        mensajes = reclamacion.mensajereclamacion_set.all()
 
-    mensajes = reclamacion.mensajes.split('\n') if reclamacion.mensajes else []
+        nuevo_mensaje_form = MensajeReclamacionForm()
 
-    nuevo_mensaje_form = MensajeReclamacionForm()
+        if request.method == 'POST' and not reclamacion.estado:
+            nuevo_mensaje = request.POST.get('nuevo_mensaje')
+            if nuevo_mensaje:
+                mensaje = MensajeReclamacion.objects.create(reclamacion=reclamacion, user=request.user, mensaje=nuevo_mensaje)
+                mensaje.save()
 
-    if request.method == 'POST' and not reclamacion.estado:
-        nuevo_mensaje = request.POST.get('nuevo_mensaje')
-        if nuevo_mensaje:
-            mensajes.append(nuevo_mensaje)
-            reclamacion.mensajes = '\n'.join(mensajes)
-            reclamacion.save()
-
-    return render(request, 'user/ver_reclamacion.html', {'reclamacion': reclamacion, 'mensajes': mensajes, 'nuevo_mensaje_form': nuevo_mensaje_form})
+        return render(request, 'user/ver_reclamacion.html', {'reclamacion': reclamacion, 'mensajes': mensajes, 'nuevo_mensaje_form': nuevo_mensaje_form})

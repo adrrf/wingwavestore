@@ -10,7 +10,7 @@ class MensajeReclamacionInline(admin.TabularInline):
     model = MensajeReclamacion
 
 class ReclamacionAdmin(admin.ModelAdmin):
-    inlines = (MensajeReclamacionInline,)
+    inlines = [MensajeReclamacionInline]
     list_display = ('id', 'fecha', 'estado')
     list_filter = ('estado',)
     search_fields = ('id',)

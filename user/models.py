@@ -23,10 +23,10 @@ class Reclamacion(models.Model):
     user = models.ForeignKey(User, on_delete= models.CASCADE, null=True)
     fecha = models.DateTimeField(auto_now_add=True)
     mensaje = models.CharField(max_length=2550)
-    mensajes = models.TextField(blank=True, null = True)
     estado = models.BooleanField(default=False, null=True, blank=False)
 
 class MensajeReclamacion(models.Model):
     reclamacion = models.ForeignKey(Reclamacion, on_delete= models.CASCADE)
+    user = models.ForeignKey(User, on_delete= models.CASCADE, null=True)
     mensaje = models.CharField(max_length=2550)
     fecha = models.DateTimeField(auto_now_add=True)
