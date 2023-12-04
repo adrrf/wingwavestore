@@ -190,5 +190,6 @@ def cancel(request, order_id):
         producto = Producto.objects.get(id=item.producto.id)
         producto.stock += item.cantidad
         producto.save()
-    order.save()
+    order.delete()
+    messages.warning(request, 'Pedido cancelado')
     return redirect('cart')
