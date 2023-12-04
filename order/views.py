@@ -85,9 +85,6 @@ def checkout(request):
                 order.provincia = provincia
                 order.pais = pais
                 order.metodo_pago = pago
-                order.completado = True
-                order.estado = 'PENDIENTE'
-                order.save()
                 items = order.productopedido_set.all()
                 for item in items:
                     producto = Producto.objects.get(id=item.producto.id)
@@ -110,11 +107,17 @@ def checkout(request):
                         }],
                         mode='payment',
                         success_url= domain + '/order/' + str(order.id),
-                        cancel_url= domain + '/order/checkout/',
+                        cancel_url= domain + '/order/' + str(order.id) + '/cancel',
                         )
                     order.stripe_id = checkout_session.id
+                    order.completado = True
+                    order.estado = 'PENDIENTE'
                     order.save()
                     return redirect(checkout_session.url, code=303)
+                else:
+                    order.completado = True
+                    order.estado = 'PENDIENTE'
+                    order.save()
                 texto = 'Hola ' + order.nombre + ' ' + order.apellido + ',\n\n' + 'Gracias por realizar tu pedido en WingWave Store.\n\n' + 'Tu pedido:\n\n'
                 items = order.productopedido_set.all()
                 for item in items:
@@ -154,7 +157,7 @@ def search(request):
     if request.method == 'POST':
         order_id = request.POST['order_id']
         try:
-            order = Pedido.objects.get(id=order_id, completado=True)
+            order = Pedido.objects.get(id=order_id, competado=True)
             if not order.completado:
                 messages.error(request, 'El pedido no ha sido completado')
             items = order.productopedido_set.all()
@@ -164,3 +167,28 @@ def search(request):
             messages.error(request, 'El pedido no existe')
     return render(request, 'order/search.html', context)
     
+def cancel(request, order_id):
+    order = Pedido.objects.get(id=order_id)
+    order.nombre = ''
+    order.apellido = ''
+    order.email = ''
+    order.calle = ''
+    order.numero = ''
+    order.puerta = ''
+    order.codigo_postal = ''
+    order.ciudad = ''
+    order.provincia = ''
+    order.pais = ''
+    order.metodo_pago = ''
+    order.total = 0
+    order.precio_envio = 0
+    order.stripe_id = ''
+    order.completado = False
+    order.estado = ''
+    items = order.productopedido_set.all()
+    for item in items:
+        producto = Producto.objects.get(id=item.producto.id)
+        producto.stock += item.cantidad
+        producto.save()
+    order.save()
+    return redirect('cart')
