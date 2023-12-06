@@ -96,4 +96,23 @@
     "fabricante": "DJI",
     "stock": 10
   }
-}]
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+      "password": "pbkdf2_sha256$600000$ZVrqVkNPsmiqxhAtVFN2ok$gzLSKdX+NA/1788A9Wbocs9wfkCMffO4QocI8Nma5j4=",
+      "last_login": "2023-12-04T17:55:23.679Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "admin",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-12-04T17:02:01Z",
+      "groups": [],
+      "user_permissions": []
+  }
+}
+]
