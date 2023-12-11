@@ -155,7 +155,7 @@ def checkout(request):
                     texto += 'Contrareembolso\n\n'
                 texto += 'Si tienes alguna duda, puedes contactar con nosotros en nuestra web'
                 send_mail('WingWave Store - Pedido realizado', texto, 'wingwavestore@gmail.com', [order.email], fail_silently=False)
-                return redirect('orderdetail', order.id)
+            return redirect('orderdetail', order.id)
         return redirect('checkout')
 
 def details(request, order_id):
