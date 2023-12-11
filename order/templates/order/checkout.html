@@ -70,7 +70,11 @@
                 <label for="email" class="form-label">Email</span></label>
                 <input type="email" class="form-control" name="email" value="{{cliente.user.email}}" placeholder="you@example.com">
               </div>
-  
+              <h4 class="mb-3">Envío</h4>
+              <div class="col-12">
+                <label for="calle" class="form-label">Recoger en tienda</label>
+                <input type="checkbox" name="tienda"  placeholder="" required="">
+              </div>
               <div class="col-12">
                 <label for="calle" class="form-label">Calle</label>
                 <input type="text" class="form-control" name="calle" value="{{cliente.user.datos_envio.calle}}" placeholder="" required="">

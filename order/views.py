@@ -46,6 +46,11 @@ def checkout(request):
         nombre = request.POST['nombre']
         apellidos = request.POST['apellidos']
         email = request.POST['email']
+        try:
+            tienda = request.POST['tienda']
+            tienda = True
+        except:
+            tienda = False
         calle = request.POST['calle']
         numero = request.POST['numero']
         puerta = request.POST['puerta']
@@ -55,13 +60,17 @@ def checkout(request):
         pais = request.POST['pais']
         pago = bool(eval(request.POST['pago']))
 
-        if nombre == '' or apellidos == '' or email == '' or calle == '' or numero == '' or codigo_postal == '' or ciudad == '' or provincia == '' or pais == '' or pago == '':
+        if (not tienda and (nombre == '' or apellidos == '' or email == '' or calle == '' or numero == '' or codigo_postal == '' or ciudad == '' or provincia == '' or pais == '' or pago == '')) or tienda and (nombre == '' or apellidos == '' or email == '' or pago == ''):
             messages.error(request, 'Por favor, rellene todos los campos')
         else:
             #validate mail regex
             email_valid = re.search(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email)
-            if not email_valid:
-                messages.error(request, 'El email no es válido')
+            # validate postal code regex
+            postal_code_valid = re.search(r'^[0-9]{5}$', codigo_postal)
+            # validate number regex
+            number_valid = re.search(r'^[0-9]+$', numero)
+            if not email_valid or (not tienda and not postal_code_valid) or (not tienda and not number_valid):
+                messages.error(request, 'Datos no válidos')
                 return redirect('checkout')
             else:
                 try:
@@ -77,6 +86,7 @@ def checkout(request):
                 order.nombre = nombre
                 order.apellido = apellidos
                 order.email = email
+                order.tienda = tienda
                 order.calle = calle
                 order.numero = numero
                 order.puerta = puerta
@@ -128,13 +138,16 @@ def checkout(request):
                 texto += 'Datos de envío:\n\n'
                 texto += 'Nombre: ' + order.nombre + ' ' + order.apellido + '\n'
                 texto += 'Email: ' + order.email + '\n'
-                texto += 'Calle: ' + order.calle + '\n'
-                texto += 'Número: ' + order.numero + '\n'
-                texto += 'Puerta: ' + order.puerta + '\n'
-                texto += 'Código postal: ' + order.codigo_postal + '\n'
-                texto += 'Ciudad: ' + order.ciudad + '\n'
-                texto += 'Provincia: ' + order.provincia + '\n'
-                texto += 'País: ' + order.pais + '\n\n'
+                if order.tienda:
+                    texto += 'Recoger en tienda\n\n'
+                else:
+                    texto += 'Calle: ' + order.calle + '\n'
+                    texto += 'Número: ' + order.numero + '\n'
+                    texto += 'Puerta: ' + order.puerta + '\n'
+                    texto += 'Código postal: ' + order.codigo_postal + '\n'
+                    texto += 'Ciudad: ' + order.ciudad + '\n'
+                    texto += 'Provincia: ' + order.provincia + '\n'
+                    texto += 'País: ' + order.pais + '\n\n'
                 texto += 'Método de pago: '
                 if order.metodo_pago:
                     texto += 'Tarjeta de crédito\n\n'
@@ -142,11 +155,12 @@ def checkout(request):
                     texto += 'Contrareembolso\n\n'
                 texto += 'Si tienes alguna duda, puedes contactar con nosotros en nuestra web'
                 send_mail('WingWave Store - Pedido realizado', texto, 'wingwavestore@gmail.com', [order.email], fail_silently=False)
-            return redirect('orderdetail', order.id)
+                return redirect('orderdetail', order.id)
         return redirect('checkout')
 
 def details(request, order_id):
     order = Pedido.objects.get(completado=True, id=order_id)
+    print(order.tienda)
     items = order.productopedido_set.all()
     total_envio = order.total + order.precio_envio
     context = {'items': items, 'order': order, 'total_envio': total_envio}

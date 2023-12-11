@@ -14,6 +14,7 @@ class Pedido(models.Model):
     nombre = models.CharField(max_length=200, null=True)
     apellido = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
+    tienda = models.BooleanField(null=True)
     calle = models.CharField(max_length=200, null=True)
     ciudad = models.CharField(max_length=200, null=True)
     numero = models.CharField(max_length=200, null=True)

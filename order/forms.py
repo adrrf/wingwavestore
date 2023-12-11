@@ -4,7 +4,7 @@ from .models import Pedido
 class CheckoutForm(forms.ModelForm):
     class Meta:
         model = Pedido
-        fields = ['nombre', 'apellido', 'email', 'calle', 'numero', 'puerta', 'codigo_postal', 'ciudad', 'provincia', 'pais', 'metodo_pago']
+        fields = ['nombre', 'apellido', 'email', 'calle', 'numero', 'puerta', 'codigo_postal', 'ciudad', 'provincia', 'pais', 'tienda', 'metodo_pago']
         labels= {
             'nombre': 'Nombre',
             'apellido': 'Apellidos',
@@ -17,5 +17,6 @@ class CheckoutForm(forms.ModelForm):
             'provincia': 'Provincia',
             'pais': 'País',
             'metodo_pago': 'Método de pago',
+            'tienda': 'Recoger en tienda',
             }
         

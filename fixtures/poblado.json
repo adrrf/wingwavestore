@@ -114,5 +114,116 @@
       "groups": [],
       "user_permissions": []
   }
-}
-]
+},
+{
+  "model": "product.producto",
+  "pk": 8,
+  "fields": {
+    "nombre": "XAG V40",
+    "imagen": "https://i.imgur.com/pgGeO6k.png",
+    "precio": 13999.00 ,
+    "descripcion": "Vehículo aéreo no tripulado diseñado para agricultura de precisión. Equipado con avanzada tecnología, rociado eficiente y mapeo detallado para mejorar la productividad agrícola.",
+    "departamento": "Drones",
+    "seccion": "Agricola",
+    "fabricante": "Skydio",
+    "stock": 3
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 9,
+  "fields": {
+    "nombre": "DJI T30",
+    "imagen": "https://i.imgur.com/bv4xlUf.png",
+    "precio": 10990.00,
+    "descripcion": "plataforma aérea versátil para misiones industriales y de mapeo. Destaca por su diseño modular, capacidad de carga útil y eficiencia en operaciones especializadas.",
+    "departamento": "Drones",
+    "seccion": "Recopilador",
+    "fabricante": "DJI",
+    "stock": 7
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 10,
+  "fields": {
+    "nombre": "DJI Avata",
+    "imagen": "https://i.imgur.com/Q68N5uQ.jpg",
+    "precio": 1459.00,
+    "descripcion": "Experiencia de vuelo inmersiva. Intuitivo controlador de movimientos. Vídeo 4K/60 fps estabilizado electrónicamente. Compacto y ligero.",
+    "departamento": "Drones",
+    "seccion": "Videografia",
+    "fabricante": "DJI",
+    "stock": 10
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 11,
+  "fields": {
+    "nombre": "Mini 3 Pro",
+    "imagen": "https://i.imgur.com/xUs3LAL.jpg",
+    "precio": 999.00,
+    "descripcion": "Dron ligero, con grabación de vídeo 4K/60fps, fotos de 48MP, tiempo de vuelo de 34 minutos y detección de obstáculos tridireccional1",
+    "departamento": "Drones",
+    "seccion": "Fotografia",
+    "fabricante": "PowerVision",
+    "stock": 2
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 12,
+  "fields": {
+    "nombre": "Zenmuse H20",
+    "imagen": "https://i.imgur.com/hmVOoCr.png",
+    "precio": 4537.50,
+    "descripcion": "Su diseño integrado y su inteligencia única ofrecen posibilidades de captura de imágenes sin precedentes para diferentes usos comerciales.Su diseño integrado y su inteligencia única ofrecen posibilidades de captura de imágenes sin precedentes para diferentes usos comerciales.",
+    "departamento": "Accesorios",
+    "seccion": "Videografia",
+    "fabricante": "Parrot",
+    "stock": 2
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 13,
+  "fields": {
+    "nombre": "Pista de Aterrizaje PGYTECH 75cm",
+    "imagen": "https://i.imgur.com/IHsOpze.jpg",
+    "precio": 25.00,
+    "descripcion": "Pista de aterrizaje para drones 75 cm diametro",
+    "departamento": "Accesorios",
+    "seccion": "Analogico",
+    "fabricante": "3DR",
+    "stock": 20
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 14,
+  "fields": {
+    "nombre": "Batería de Vuelo Inteligente",
+    "imagen": "https://i.imgur.com/Yi1cakp.jpg",
+    "precio": 199.00,
+    "descripcion": "Gracias a las baterías de vuelo inteligente de mayor capacidad y al nuevo sistema de propulsión, proporciona un tiempo máx. de vuelo de 46 minutos y un tiempo máx. de vuelo estacionario de 40 minutos.",
+    "departamento": "Accesorios",
+    "seccion": "Carga",
+    "fabricante": "Hubson",
+    "stock": 6
+  }
+},
+{
+  "model": "product.producto",
+  "pk": 15,
+  "fields": {
+    "nombre": "Delock Organizador de Accesorios",
+    "imagen": "https://i.imgur.com/fvFbhw4.jpg",
+    "precio": 36.50,
+    "descripcion": "Funda para accesorios y piezas de drones",
+    "departamento": "Accesorios",
+    "seccion": "Recopilador",
+    "fabricante": "Hubson",
+    "stock": 20
+  }
+}]

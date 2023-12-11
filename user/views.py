@@ -173,9 +173,15 @@ def datos_pago(request):
 
 @login_required(login_url='login')
 def mis_pedidos(request):
-    cliente = Cliente.objects.get(user= request.user)
-    pedidos = Pedido.objects.filter(cliente=cliente, completado=True)
-    return render(request, 'user/mis_pedidos.html', {'cliente': cliente, 'pedidos': pedidos})
+    try:
+        cliente = Cliente.objects.get(user= request.user)
+    except:
+        cliente = None
+    if cliente == None:
+        return render(request, 'user/mis_pedidos.html', {'pedidos': []})
+    else:
+        pedidos = Pedido.objects.filter(cliente=cliente, completado=True)
+        return render(request, 'user/mis_pedidos.html', {'pedidos': pedidos})
 
 @login_required(login_url='login')
 def mis_reclamaciones(request):

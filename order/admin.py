@@ -19,7 +19,7 @@ class PedidoAdmin(admin.ModelAdmin):
             'fields': ('cliente', 'fecha', 'completado')
         }),
         ('Datos de envío', {
-            'fields': ('calle', 'numero', 'puerta', 'ciudad', 'provincia', 'pais', 'codigo_postal')
+            'fields': ('tienda', 'calle', 'numero', 'puerta', 'ciudad', 'provincia', 'pais', 'codigo_postal')
         }),
         ('Datos de pago', {
             'fields': ('metodo_pago',)
